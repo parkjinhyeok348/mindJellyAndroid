@@ -7,8 +7,8 @@ import java.util.List;
 
 /**
  * @author : Jinhyeok
- * @className : com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model
- * @description :
+ * @className : com.mindJellyProject.mindjelly.jellyDomain.jelly.model
+ * @description : 젤리 상세 정보를 가져오기 위한 Jelly Response DTO
  * @modification : 2025-01-02(Jinhyeok) 수정
  * @date : 2025-01-02
  * <p>

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * @author : Jinhyeok
- * @className : com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model
+ * @className : com.mindJellyProject.mindjelly.jellyDomain.jelly.model
  * @description : 젤리 서랍에서 보일 jelly 정보를 가져오는 Jelly Response DTO
  * @modification : 2025-01-02(Jinhyeok) 수정
  * @date : 2025-01-02
