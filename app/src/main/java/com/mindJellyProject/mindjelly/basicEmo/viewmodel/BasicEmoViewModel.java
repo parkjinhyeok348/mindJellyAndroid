@@ -20,7 +20,8 @@ import java.util.List;
     -----------------------------------------
       2025-01-03     Jinhyeok        주석 생성
 
- */public class BasicEmoViewModel {
+ */
+public class BasicEmoViewModel {
      private final BasicEmoRepository repository;
 
      public BasicEmoViewModel(){

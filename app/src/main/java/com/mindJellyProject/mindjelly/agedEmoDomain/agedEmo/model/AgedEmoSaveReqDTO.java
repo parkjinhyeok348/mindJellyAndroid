@@ -9,19 +9,16 @@ import java.util.List;
 /**
  * @author : Jinhyeok
  * @className : com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model
- * @description : 숙성 감정(AgedEmo) Model
- * @modification : 2025-01-02(Jinhyeok) 수정
- * @date : 2025-01-02
- * <p>
+ * @description : AgedEmo 생성하기 위한 AgedEmo Request DTO
+ * @modification : 2025-01-03(Jinhyeok) 수정
+ * @date : 2025-01-03
+ *
  * ====개정이력(Modification Information)====
  * 수정일        수정자        수정내용
  * -----------------------------------------
- * 2025-01-02     Jinhyeok        주석 생성
+ * 2025-01-03     Jinhyeok        주석 생성
  */
-public class AgedEmo {
-    @SerializedName("agedEmoId")
-    private Long agedEmoId;
-
+public class AgedEmoSaveReqDTO {
     @SerializedName("userId")
     private Long userId;
 
@@ -32,30 +29,21 @@ public class AgedEmo {
     private String agedEmoName;
 
     @SerializedName("content")
-    private String content; // 젤리에 남길 메모
+    private String content;
 
     @SerializedName("createDate")
     private String createDate;
 
     @SerializedName("agedEmoImages")
-    private List<AgedEmoImage> agedEmoImages = new ArrayList<>(); // 젤리에 들어갈 사진 리스트
+    private List<AgedEmoImage> agedEmoImages = new ArrayList<>();
 
-    public AgedEmo(Long agedEmoId, Long userId, Long jellyCombId, String agedEmoName, String content, String createDate, List<AgedEmoImage> agedEmoImages) {
-        this.agedEmoId = agedEmoId;
+    public AgedEmoSaveReqDTO(Long userId, Long jellyCombId, String agedEmoName, String content, String createDate, List<AgedEmoImage> agedEmoImages) {
         this.userId = userId;
         this.jellyCombId = jellyCombId;
         this.agedEmoName = agedEmoName;
         this.content = content;
         this.createDate = createDate;
         this.agedEmoImages = agedEmoImages;
-    }
-
-    public Long getAgedEmoId() {
-        return agedEmoId;
-    }
-
-    public void setAgedEmoId(Long agedEmoId) {
-        this.agedEmoId = agedEmoId;
     }
 
     public Long getUserId() {
