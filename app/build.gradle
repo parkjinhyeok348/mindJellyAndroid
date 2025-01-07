@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.mindJellyProject.mindjelly"
-        minSdk 24
+        minSdk 31
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -41,5 +41,5 @@ dependencies {
     implementation libs.retrofit
     implementation libs.converter.gson
     implementation libs.okhttp
-
+    implementation libs.core.splashscreen
 }
