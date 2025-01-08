@@ -8,11 +8,9 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- 배경 이미지 -->
         <ImageView
             android:id="@+id/background_image"
             android:layout_width="match_parent"
@@ -20,16 +18,77 @@
             android:scaleType="centerCrop"
             android:src="@drawable/home_screen" />
 
-        <!-- 상단 제목 -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <GridLayout
+            android:id="@+id/mainGrid"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="홈 페이지"
-            android:textSize="24sp"
-            android:textColor="@android:color/black"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp" />
+            android:layout_above="@id/btnSelectionBox"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:alignmentMode="alignMargins"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/btnTodayJelly"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:backgroundTint="#A6E4A6"
+                android:text="오늘의\n마음젤리"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:padding="8dp"/>
+
+            <Button
+                android:id="@+id/btnJellyDrawer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:backgroundTint="#FFE0A4"
+                android:text="젤리 서랍"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:padding="8dp"/>
+
+            <Button
+                android:id="@+id/btnAgingRoom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:backgroundTint="#D4E4FF"
+                android:text="에이징룸"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:padding="8dp"/>
+
+            <Button
+                android:id="@+id/btnJellyMuseum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:backgroundTint="#FFC5C5"
+                android:text="젤리 뮤지엄"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:padding="8dp"/>
+
+        </GridLayout>
+
+        <Button
+            android:id="@+id/btnSelectionBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="#A3D7FF"
+            android:text="젤리 셀렉션 박스"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"/>
 
 
     </RelativeLayout>

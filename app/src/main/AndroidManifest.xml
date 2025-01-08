@@ -10,18 +10,50 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MindJelly"
-        >
+        android:theme="@style/Theme.MindJelly">
+        <activity
+            android:name=".users.view.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.view.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.view.FindPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.view.FindEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.view.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.view.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".agedEmoDomain.agedEmo.view.AgingRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".jellyDomain.jelly.view.JellySelectionBoxActivity"
+            android:exported="false" />
+        <activity
+            android:name=".jellyDomain.jelly.view.JellyDrawerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".basicEmo.view.TodayJellyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".agedEmoDomain.agedEmo.view.jellyMuseumActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".common.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
