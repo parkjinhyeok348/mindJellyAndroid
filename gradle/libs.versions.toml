@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.3"
+awsJavaSdkS3 = "1.12.767"
 coreSplashscreen = "1.0.1"
 coreSplashscreenVersion = "1.0.0"
 gson = "2.10.1"
@@ -15,8 +16,10 @@ retrofit = "2.9.0"
 annotation = "1.6.0"
 lifecycleLivedataKtx = "2.6.1"
 lifecycleViewmodelKtx = "2.6.1"
+springCloudAwsStarter = "3.1.1"
 
 [libraries]
+aws-java-sdk-s3 = { module = "com.amazonaws:aws-java-sdk-s3", version.ref = "awsJavaSdkS3" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 core-splashscreen-v100 = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreenVersion" }
@@ -33,6 +36,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+spring-cloud-aws-starter = { module = "io.awspring.cloud:spring-cloud-aws-starter", version.ref = "springCloudAwsStarter" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

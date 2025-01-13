@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitClient {
     private static Retrofit retrofit;
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "http://192.168.0.16:8080/";
 
     // Retrofit 인스턴스 생성
     public static Retrofit getInstance() {
