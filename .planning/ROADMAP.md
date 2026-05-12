@@ -45,7 +45,7 @@
 **Plans:** 5 plans
 
 Plans:
-- [ ] 01-A-PLAN.md — SessionManager + gradle security-crypto (Wave 1)
+- [x] 01-A-PLAN.md — SessionManager + gradle security-crypto (Wave 1)
 - [ ] 01-B-PLAN.md — AuthInterceptor + RetrofitClient OkHttpClient (Wave 1)
 - [ ] 01-C-PLAN.md — LoginActivity JWT 저장 + 에러 세분화 + SplashActivity 라우팅 + network_security_config (Wave 2)
 - [ ] 01-D-PLAN.md — SignUpActivity createUser 결과 옵저빙 완성 (Wave 2)
