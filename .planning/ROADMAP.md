@@ -42,6 +42,16 @@
 - SessionManager 없이는 이후 모든 Phase 테스트 불가 → 이것부터
 - userId 하드코딩 Phase 1 완료 시 반드시 제거
 
+**Plans:** 5 plans
+
+Plans:
+- [ ] 01-A-PLAN.md — SessionManager + gradle security-crypto (Wave 1)
+- [ ] 01-B-PLAN.md — AuthInterceptor + RetrofitClient OkHttpClient (Wave 1)
+- [ ] 01-C-PLAN.md — LoginActivity JWT 저장 + 에러 세분화 + SplashActivity 라우팅 + network_security_config (Wave 2)
+- [ ] 01-D-PLAN.md — SignUpActivity createUser 결과 옵저빙 완성 (Wave 2)
+- [ ] 01-E-PLAN.md — userId 하드코딩 제거 + 6개 Repository Context 업데이트 + 401 처리 (Wave 3)
+
+
 ---
 
 ### Phase 2: 핵심 루프
