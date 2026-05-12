@@ -16,6 +16,7 @@ retrofit = "2.9.0"
 annotation = "1.6.0"
 lifecycleLivedataKtx = "2.6.1"
 lifecycleViewmodelKtx = "2.6.1"
+securityCrypto = "1.1.0-alpha06"
 springCloudAwsStarter = "3.1.1"
 glide = "4.15.1"
 
@@ -37,6 +38,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 spring-cloud-aws-starter = { module = "io.awspring.cloud:spring-cloud-aws-starter", version.ref = "springCloudAwsStarter" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
