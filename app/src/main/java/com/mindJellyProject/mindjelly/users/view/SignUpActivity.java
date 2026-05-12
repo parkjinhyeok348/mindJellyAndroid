@@ -1,5 +1,6 @@
 package com.mindJellyProject.mindjelly.users.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +79,20 @@ public class SignUpActivity extends AppCompatActivity {
                 birthDate, null, ageRange, isMarketing
         );
 
-        userViewModel.createUser(userSaveReqDTO);
+        userViewModel.createUser(userSaveReqDTO).observe(this, resource -> {
+            if (resource != null && resource.getData() != null) {
+                Toast.makeText(this, "발송된 이메일을 확인하세요.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            } else {
+                String error = resource != null ? resource.getError() : null;
+                String message = (error != null && !error.trim().isEmpty())
+                        ? "회원가입에 실패했습니다: " + error
+                        : "회원가입에 실패했습니다.";
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
