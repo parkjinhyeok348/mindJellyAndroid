@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-05-12T07:17:07Z"
+last_updated: "2026-05-12T07:23:45Z"
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
-  percent: 60
+  completed_plans: 4
+  percent: 80
 ---
 
 # Project State: MindJelly (마음젤리)
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-05-12)
 
 **Milestone:** v1.0
 **Active Phase:** Phase 1 — Auth 기반 (in progress)
-**Last Action:** Plan 01-C completed — Login JWT storage, Korean auth error handling, Splash token routing, and debug-only cleartext configuration committed and summarized
+**Last Action:** Plan 01-D completed — SignUpActivity now observes createUser results, shows Korean email-verification guidance, and returns successful signup users to LoginActivity
 
 ## Phase Progress
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| Phase 1: Auth 기반 | In Progress | 3/5 plans complete — 01-C login session persistence and splash token routing ready for signup/userId follow-up plans |
+| Phase 1: Auth 기반 | In Progress | 4/5 plans complete — 01-D signup result observing ready; 01-E userId hardcoding removal remains |
 | Phase 2: 핵심 루프 | Not Started | 감정 선택 → 일기 작성 → 젤리서랍 |
 | Phase 3: 숙성 메커니즘 | Not Started | AgingRoom 카운트다운 |
 | Phase 4: 젤리뮤지엄 | Not Started | 숙성 완료 컬렉션 |
@@ -53,6 +53,7 @@ See: .planning/PROJECT.md (updated 2026-05-12)
 | 2026-05-12 | RetrofitClient context API is the authenticated networking path | OkHttp AuthInterceptor needs application Context to read SessionManager without DI |
 | 2026-05-12 | Login success persists JWT before navigation | Authenticated app sessions must survive restart and feed SplashActivity routing |
 | 2026-05-12 | Debug cleartext uses resource overlay | Main network security config denies cleartext while debug overlay permits emulator HTTP |
+| 2026-05-12 | Signup observes createUser results | AUTH-01/AUTH-02 completion requires success/failure UI feedback instead of fire-and-forget submission |
 
 ## Execution Metrics
 
@@ -61,6 +62,7 @@ See: .planning/PROJECT.md (updated 2026-05-12)
 | 2026-05-12 | 01-auth | A | 15min | 2 | 3 |
 | 2026-05-12 | 01-auth | B | 15min | 2 | 2 |
 | 2026-05-12 | 01-auth | C | 25min | 3 | 8 |
+| 2026-05-12 | 01-auth | D | 8min | 1 | 2 |
 
 ---
 *Initialized: 2026-05-12*
