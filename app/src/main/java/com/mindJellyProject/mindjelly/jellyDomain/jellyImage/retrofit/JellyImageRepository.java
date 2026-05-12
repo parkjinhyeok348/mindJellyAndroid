@@ -20,11 +20,6 @@ import retrofit2.Response;
  * @description : JellyImage Repository
  * @modification : 2025-01-03(Jinhyeok) 수정
  * @date : 2025-01-03
- * <p>
- * ====개정이력(Modification Information)====
- * 수정일        수정자        수정내용
- * -----------------------------------------
- * 2025-01-03     Jinhyeok        주석 생성
  */
 public class JellyImageRepository {
 
@@ -41,15 +36,15 @@ public class JellyImageRepository {
             @Override
             public void onResponse(Call<JellyImageResDTO> call, Response<JellyImageResDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<JellyImageResDTO> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -62,15 +57,15 @@ public class JellyImageRepository {
             @Override
             public void onResponse(Call<List<JellyImageResDTO>> call, Response<List<JellyImageResDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<List<JellyImageResDTO>> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;

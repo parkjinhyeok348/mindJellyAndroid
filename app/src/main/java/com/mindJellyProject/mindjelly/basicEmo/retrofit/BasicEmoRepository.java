@@ -19,11 +19,6 @@ import retrofit2.Response;
  * @description : BasicEmo Repository
  * @modification : 2025-01-03(Jinhyeok) 수정
  * @date : 2025-01-03
- *
- * ====개정이력(Modification Information)====
- * 수정일        수정자        수정내용
- * -----------------------------------------
- * 2025-01-03     Jinhyeok        주석 생성
  */
 public class BasicEmoRepository {
 
@@ -41,15 +36,15 @@ public class BasicEmoRepository {
             @Override
             public void onResponse(Call<BasicEmoResDTO> call, Response<BasicEmoResDTO> response) {
                 if (response.isSuccessful()) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<BasicEmoResDTO> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>(t.getMessage()));
+                resultLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 
@@ -64,15 +59,15 @@ public class BasicEmoRepository {
             @Override
             public void onResponse(Call<List<BasicEmoResDTO>> call, Response<List<BasicEmoResDTO>> response) {
                 if (response.isSuccessful()) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<List<BasicEmoResDTO>> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>(t.getMessage()));
+                resultLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 

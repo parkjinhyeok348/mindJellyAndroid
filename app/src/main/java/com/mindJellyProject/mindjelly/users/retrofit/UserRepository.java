@@ -21,11 +21,6 @@ import retrofit2.Response;
  * @description : User Repository
  * @modification : 2025-01-02(Jinhyeok) 수정
  * @date : 2025-01-02
- * <p>
- * ====개정이력(Modification Information)====
- * 수정일        수정자        수정내용
- * -----------------------------------------
- * 2025-01-02     Jinhyeok        주석 생성
  */
 public class UserRepository {
 
@@ -43,15 +38,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
                 if (response.isSuccessful()) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>(t.getMessage()));
+                resultLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
         return resultLiveData;
@@ -64,15 +59,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
                 if (response.isSuccessful()) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -85,15 +80,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<UserUpdateReqDTO> call, Response<UserUpdateReqDTO> response) {
                 if (response.isSuccessful()) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<UserUpdateReqDTO> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -106,15 +101,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -127,15 +122,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -148,15 +143,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -169,15 +164,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -190,15 +185,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -211,15 +206,15 @@ public class UserRepository {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(new Resource<>(response.body()));
+                    resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
@@ -232,18 +227,17 @@ public class UserRepository {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    resultLiveData.postValue(new Resource<>((Void) null));
+                    resultLiveData.postValue(Resource.success(null));
                 } else {
-                    resultLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                resultLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return resultLiveData;
     }
 }
-

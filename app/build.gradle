@@ -48,4 +48,6 @@ dependencies {
     implementation libs.converter.gson
     implementation libs.okhttp
     implementation libs.core.splashscreen
+    implementation libs.glide
+    annotationProcessor libs.glide.compiler
 }

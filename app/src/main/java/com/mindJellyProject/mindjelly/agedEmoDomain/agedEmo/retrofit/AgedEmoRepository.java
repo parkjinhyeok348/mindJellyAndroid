@@ -9,7 +9,6 @@ import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model.AgedEmoResDTO;
 import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model.AgedEmoSaveReqDTO;
 import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model.AgedEmoUpdateReqDTO;
 import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model.AgedEmoUpdateResDTO;
-import com.mindJellyProject.mindjelly.basicEmo.retrofit.BasicEmoService;
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.common.RetrofitClient;
 
@@ -45,15 +44,15 @@ public class AgedEmoRepository {
             @Override
             public void onResponse(Call<AgedEmo> call, Response<AgedEmo> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    agedEmoLiveData.postValue(new Resource<>(response.body()));
+                    agedEmoLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    agedEmoLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    agedEmoLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<AgedEmo> call, Throwable t) {
-                agedEmoLiveData.postValue(new Resource<>(t.getMessage()));
+                agedEmoLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 
@@ -68,15 +67,15 @@ public class AgedEmoRepository {
             @Override
             public void onResponse(Call<AgedEmoUpdateResDTO> call, Response<AgedEmoUpdateResDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    agedEmoInfoLiveData.postValue(new Resource<>(response.body()));
+                    agedEmoInfoLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    agedEmoInfoLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    agedEmoInfoLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<AgedEmoUpdateResDTO> call, Throwable t) {
-                agedEmoInfoLiveData.postValue(new Resource<>(t.getMessage()));
+                agedEmoInfoLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 
@@ -91,15 +90,15 @@ public class AgedEmoRepository {
             @Override
             public void onResponse(Call<AgedEmo> call, Response<AgedEmo> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    updatedAgedEmoLiveData.postValue(new Resource<>(response.body()));
+                    updatedAgedEmoLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    updatedAgedEmoLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    updatedAgedEmoLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<AgedEmo> call, Throwable t) {
-                updatedAgedEmoLiveData.postValue(new Resource<>(t.getMessage()));
+                updatedAgedEmoLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 
@@ -114,15 +113,15 @@ public class AgedEmoRepository {
             @Override
             public void onResponse(Call<AgedEmoResDTO> call, Response<AgedEmoResDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    agedEmoByIdLiveData.postValue(new Resource<>(response.body()));
+                    agedEmoByIdLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    agedEmoByIdLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    agedEmoByIdLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<AgedEmoResDTO> call, Throwable t) {
-                agedEmoByIdLiveData.postValue(new Resource<>(t.getMessage()));
+                agedEmoByIdLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 
@@ -137,15 +136,15 @@ public class AgedEmoRepository {
             @Override
             public void onResponse(Call<List<AgedEmoMuseumResDTO>> call, Response<List<AgedEmoMuseumResDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    agedEmoListLiveData.postValue(new Resource<>(response.body()));
+                    agedEmoListLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    agedEmoListLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    agedEmoListLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<List<AgedEmoMuseumResDTO>> call, Throwable t) {
-                agedEmoListLiveData.postValue(new Resource<>(t.getMessage()));
+                agedEmoListLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 

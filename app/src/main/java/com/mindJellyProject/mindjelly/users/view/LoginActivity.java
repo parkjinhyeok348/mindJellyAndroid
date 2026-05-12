@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         // 이메일/비밀번호 찾기 버튼 클릭 이벤트
         btnFindEamil.setOnClickListener(v -> {
             // 비밀번호 찾기 페이지로 이동
-            Intent intent = new Intent(LoginActivity.this, FindEmailActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         });
         btnFindPassword.setOnClickListener(v -> {

@@ -20,10 +20,6 @@ import retrofit2.Response;
  * @description : AgedEmoImage Repository
  * @modification : 2025-01-06(Jinhyeok) 수정
  * @date : 2025-01-06
- * ====개정이력(Modification Information)====
- * 수정일        수정자        수정내용
- * -----------------------------------------
- * 2025-01-06     Jinhyeok        주석 생성
  */
 public class AgedEmoImageRepository {
     private final AgedEmoImageService agedEmoImageService;
@@ -40,15 +36,15 @@ public class AgedEmoImageRepository {
             @Override
             public void onResponse(Call<AgedEmoImageResDTO> call, Response<AgedEmoImageResDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    agedEmoImageLiveData.postValue(new Resource<>(response.body()));
+                    agedEmoImageLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    agedEmoImageLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    agedEmoImageLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<AgedEmoImageResDTO> call, Throwable t) {
-                agedEmoImageLiveData.postValue(new Resource<>(t.getMessage()));
+                agedEmoImageLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 
@@ -63,15 +59,15 @@ public class AgedEmoImageRepository {
             @Override
             public void onResponse(Call<List<AgedEmoImageResDTO>> call, Response<List<AgedEmoImageResDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    agedEmoImageListLiveData.postValue(new Resource<>(response.body()));
+                    agedEmoImageListLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    agedEmoImageListLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    agedEmoImageListLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<List<AgedEmoImageResDTO>> call, Throwable t) {
-                agedEmoImageListLiveData.postValue(new Resource<>(t.getMessage()));
+                agedEmoImageListLiveData.postValue(Resource.error(t.getMessage()));
             }
         });
 

@@ -6,14 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.common.RetrofitClient;
-import com.mindJellyProject.mindjelly.jellyDomain.jelly.retrofit.JellyService;
 import com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.model.JellyCombResDTO;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author : Jinhyeok
@@ -21,11 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @description : Jelly Combination Repository
  * @modification : 2025-01-03(Jinhyeok) 수정
  * @date : 2025-01-03
-
- * ====개정이력(Modification Information)====
- * 수정일        수정자        수정내용
- * -----------------------------------------
- * 2025-01-03     Jinhyeok        주석 생성
  */
 
 public class JellyCombRepository {
@@ -43,15 +35,15 @@ public class JellyCombRepository {
             @Override
             public void onResponse(Call<JellyCombResDTO> call, Response<JellyCombResDTO> response) {
                 if (response.isSuccessful()) {
-                    jellyCombLiveData.postValue(new Resource<>(response.body()));
+                    jellyCombLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    jellyCombLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    jellyCombLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<JellyCombResDTO> call, Throwable t) {
-                jellyCombLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                jellyCombLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return jellyCombLiveData;
@@ -64,18 +56,18 @@ public class JellyCombRepository {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    jellyIconLiveData.postValue(new Resource<>(response.body()));
+                    // String 타입 데이터를 명확하게 '성공' 데이터로 전달
+                    jellyIconLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    jellyIconLiveData.postValue(new Resource<>("Error: " + response.message()));
+                    jellyIconLiveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                jellyIconLiveData.postValue(new Resource<>("Error: " + t.getMessage()));
+                jellyIconLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
         return jellyIconLiveData;
     }
 }
-

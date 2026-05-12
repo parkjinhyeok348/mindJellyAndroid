@@ -42,6 +42,6 @@ public interface JellyService {
     @GET("/jelly/{jellyId}")
     Call<JellyResDTO> getJellyById(@Path("jellyId") Long jellyId);
 
-    @GET("/jelly/user/{userId}")
+    @GET("jelly/user/{userId}")
     Call<List<JellyDrawerResDTO>> getJellyList(@Path("userId") Long userId);
 }

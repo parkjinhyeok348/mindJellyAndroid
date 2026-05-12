@@ -17,8 +17,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author : Jinhyeok
@@ -26,11 +24,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @description : Jelly Repository
  * @modification : 2025-01-03(Jinhyeok) 수정
  * @date : 2025-01-03
- * <p>
- * ====개정이력(Modification Information)====
- * 수정일        수정자        수정내용
- * -----------------------------------------
- * 2025-01-03     Jinhyeok        주석 생성
  */
 public class JellyRepository {
     private final JellyService jellyService;
@@ -46,15 +39,15 @@ public class JellyRepository {
             @Override
             public void onResponse(Call<Jelly> call, Response<Jelly> response) {
                 if (response.isSuccessful()) {
-                    liveData.postValue(new Resource<>(response.body()));
+                    liveData.postValue(Resource.success(response.body()));
                 } else {
-                    liveData.postValue(new Resource<>("Error: " + response.message()));
+                    liveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Jelly> call, Throwable t) {
-                liveData.postValue(new Resource<>(t.getMessage()));
+                liveData.postValue(Resource.error(t.getMessage()));
             }
         });
         return liveData;
@@ -67,15 +60,15 @@ public class JellyRepository {
             @Override
             public void onResponse(Call<JellyUpdateResDTO> call, Response<JellyUpdateResDTO> response) {
                 if (response.isSuccessful()) {
-                    liveData.postValue(new Resource<>(response.body()));
+                    liveData.postValue(Resource.success(response.body()));
                 } else {
-                    liveData.postValue(new Resource<>("Error: " + response.message()));
+                    liveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<JellyUpdateResDTO> call, Throwable t) {
-                liveData.postValue(new Resource<>(t.getMessage()));
+                liveData.postValue(Resource.error(t.getMessage()));
             }
         });
         return liveData;
@@ -88,15 +81,15 @@ public class JellyRepository {
             @Override
             public void onResponse(Call<Jelly> call, Response<Jelly> response) {
                 if (response.isSuccessful()) {
-                    liveData.postValue(new Resource<>(response.body()));
+                    liveData.postValue(Resource.success(response.body()));
                 } else {
-                    liveData.postValue(new Resource<>("Error: " + response.message()));
+                    liveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Jelly> call, Throwable t) {
-                liveData.postValue(new Resource<>(t.getMessage()));
+                liveData.postValue(Resource.error(t.getMessage()));
             }
         });
         return liveData;
@@ -109,15 +102,15 @@ public class JellyRepository {
             @Override
             public void onResponse(Call<JellyResDTO> call, Response<JellyResDTO> response) {
                 if (response.isSuccessful()) {
-                    liveData.postValue(new Resource<>(response.body()));
+                    liveData.postValue(Resource.success(response.body()));
                 } else {
-                    liveData.postValue(new Resource<>("Error: " + response.message()));
+                    liveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<JellyResDTO> call, Throwable t) {
-                liveData.postValue(new Resource<>(t.getMessage()));
+                liveData.postValue(Resource.error(t.getMessage()));
             }
         });
         return liveData;
@@ -130,18 +123,17 @@ public class JellyRepository {
             @Override
             public void onResponse(Call<List<JellyDrawerResDTO>> call, Response<List<JellyDrawerResDTO>> response) {
                 if (response.isSuccessful()) {
-                    liveData.postValue(new Resource<>(response.body()));
+                    liveData.postValue(Resource.success(response.body()));
                 } else {
-                    liveData.postValue(new Resource<>("Error: " + response.message()));
+                    liveData.postValue(Resource.error("Error: " + response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<List<JellyDrawerResDTO>> call, Throwable t) {
-                liveData.postValue(new Resource<>(t.getMessage()));
+                liveData.postValue(Resource.error(t.getMessage()));
             }
         });
         return liveData;
     }
 }
-

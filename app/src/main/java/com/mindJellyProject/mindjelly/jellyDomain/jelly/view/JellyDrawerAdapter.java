@@ -1,5 +1,6 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jelly.view;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class JellyDrawerAdapter extends RecyclerView.Adapter<JellyDrawerAdapter.
 
     private List<JellyDrawerResDTO> jellyList = new ArrayList<>();
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setJellyList(List<JellyDrawerResDTO> list) {
         this.jellyList = list;
         notifyDataSetChanged();

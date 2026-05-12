@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat > *)",
+      "Bash(npx gsd-sdk *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\KTDS\\git\\mindJellyAndroid\\.planning\\codebase"
+    ]
+  }
+}

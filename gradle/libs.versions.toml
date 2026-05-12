@@ -17,6 +17,7 @@ annotation = "1.6.0"
 lifecycleLivedataKtx = "2.6.1"
 lifecycleViewmodelKtx = "2.6.1"
 springCloudAwsStarter = "3.1.1"
+glide = "4.15.1"
 
 [libraries]
 aws-java-sdk-s3 = { module = "com.amazonaws:aws-java-sdk-s3", version.ref = "awsJavaSdkS3" }
@@ -37,6 +38,9 @@ annotation = { group = "androidx.annotation", name = "annotation", version.ref =
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 spring-cloud-aws-starter = { module = "io.awspring.cloud:spring-cloud-aws-starter", version.ref = "springCloudAwsStarter" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
