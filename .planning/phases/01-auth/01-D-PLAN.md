@@ -2,10 +2,11 @@
 phase: 01-auth
 plan: D
 type: execute
-wave: 2
+wave: 4
 depends_on:
   - 01-A
   - 01-B
+  - 01-C
 files_modified:
   - app/src/main/java/com/mindJellyProject/mindjelly/users/view/SignUpActivity.java
 autonomous: true

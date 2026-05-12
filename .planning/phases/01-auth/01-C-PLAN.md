@@ -2,7 +2,7 @@
 phase: 01-auth
 plan: C
 type: execute
-wave: 2
+wave: 3
 depends_on:
   - 01-A
   - 01-B

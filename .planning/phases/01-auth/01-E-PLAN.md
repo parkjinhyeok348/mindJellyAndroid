@@ -2,7 +2,7 @@
 phase: 01-auth
 plan: E
 type: execute
-wave: 3
+wave: 4
 depends_on:
   - 01-A
   - 01-B
@@ -16,6 +16,12 @@ files_modified:
   - app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyCombination/retrofit/JellyCombRepository.java
   - app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyImage/retrofit/JellyImageRepository.java
   - app/src/main/java/com/mindJellyProject/mindjelly/common/AuthInterceptor.java
+  - app/src/main/java/com/mindJellyProject/mindjelly/agedEmoDomain/agedEmo/viewmodel/AgedEmoViewModel.java
+  - app/src/main/java/com/mindJellyProject/mindjelly/agedEmoDomain/agedEmoImage/viewmodel/AgedEmoImageViewModel.java
+  - app/src/main/java/com/mindJellyProject/mindjelly/basicEmo/viewmodel/BasicEmoViewModel.java
+  - app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jelly/viewmodel/JellyViewModel.java
+  - app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyCombination/viewmodel/JellyCombViewModel.java
+  - app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyImage/viewmodel/JellyImageViewModel.java
 autonomous: true
 requirements:
   - QUAL-05
@@ -86,17 +92,36 @@ JellyDrawerActivity line 49:
     app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jelly/retrofit/JellyRepository.java
     app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyCombination/retrofit/JellyCombRepository.java
     app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyImage/retrofit/JellyImageRepository.java
+    app/src/main/java/com/mindJellyProject/mindjelly/agedEmoDomain/agedEmo/viewmodel/AgedEmoViewModel.java
+    app/src/main/java/com/mindJellyProject/mindjelly/agedEmoDomain/agedEmoImage/viewmodel/AgedEmoImageViewModel.java
+    app/src/main/java/com/mindJellyProject/mindjelly/basicEmo/viewmodel/BasicEmoViewModel.java
+    app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jelly/viewmodel/JellyViewModel.java
+    app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyCombination/viewmodel/JellyCombViewModel.java
+    app/src/main/java/com/mindJellyProject/mindjelly/jellyDomain/jellyImage/viewmodel/JellyImageViewModel.java
   </files>
   <action>
+    **Part A — 6개 Repository Context 파라미터 추가:**
     위 6개 Repository 각각에 동일한 패턴 적용:
     1. 생성자에 Context context 파라미터 추가 및 필드 저장.
     2. createService(XxxService.class) -> createService(XxxService.class, context) 로 변경.
     3. import android.content.Context 추가.
-    각 Repository의 ViewModel이 Repository를 직접 생성하므로,
-    해당 ViewModel 생성자도 Context 파라미터 추가 또는 Application context 전달 패턴으로 수정.
-    ViewModel에서 Application context 사용 시: getApplication()이 없는 ViewModel은
-    AndroidViewModel로 변경하거나, Activity에서 getApplicationContext()를 ViewModel 팩토리로 전달.
+
+    **Part B — 6개 ViewModel AndroidViewModel 전환 (컴파일 오류 방지 필수):**
+    각 Repository에 대응하는 ViewModel을 다음 패턴으로 수정:
+    1. extends ViewModel → extends AndroidViewModel 로 변경.
+    2. 기본 생성자 → public XxxViewModel(Application application) 생성자로 변경.
+    3. Repository 생성 시 new XxxRepository(application.getApplicationContext()) 로 전달.
+    4. import androidx.lifecycle.AndroidViewModel, android.app.Application 추가.
+    대상 ViewModel 6개:
+    - AgedEmoViewModel (AgedEmoRepository 사용)
+    - AgedEmoImageViewModel (AgedEmoImageRepository 사용)
+    - BasicEmoViewModel (BasicEmoRepository 사용)
+    - JellyViewModel (JellyRepository 사용)
+    - JellyCombViewModel (JellyCombRepository 사용)
+    - JellyImageViewModel (JellyImageRepository 사용)
     기존 프로젝트 패턴(No DI) 준수 — 직접 생성 유지.
+    AndroidViewModel을 사용하면 ViewModelProvider가 Application을 자동 주입하므로
+    Activity 코드 변경 불필요.
   </action>
   <verify>
     <automated>grep -rn "createService.*class)" app/src/main/java/com/mindJellyProject/mindjelly --include="*Repository.java" | grep -v "UserRepository"</automated>
@@ -129,6 +154,7 @@ JellyDrawerActivity line 49:
          Intent intent = new Intent(appContext, LoginActivity.class);
          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
          appContext.startActivity(intent);
+       어느 분기든 return response; 로 Response를 반환한다 (OkHttp 인터셉터 계약).
     3. RetrofitClient.getInstance(Context)에서 new AuthInterceptor(context.getApplicationContext())로 생성.
     4. import: android.content.Context, android.content.Intent,
        com.mindJellyProject.mindjelly.users.view.LoginActivity.

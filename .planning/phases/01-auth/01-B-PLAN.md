@@ -2,7 +2,7 @@
 phase: 01-auth
 plan: B
 type: execute
-wave: 1
+wave: 2
 depends_on:
   - 01-A
 files_modified:
@@ -26,10 +26,10 @@ must_haves:
   key_links:
     - from: "AuthInterceptor.intercept()"
       to: "SessionManager.getToken()"
-      via: "생성자 주입된 SessionManager 인스턴스"
-    - from: "RetrofitClient.getInstance()"
+      via: "생성자 주입된 appContext로 SessionManager.getInstance(appContext) 호출"
+    - from: "RetrofitClient.getInstance(Context)"
       to: "AuthInterceptor"
-      via: "OkHttpClient.Builder().addInterceptor()"
+      via: "OkHttpClient.Builder().addInterceptor(new AuthInterceptor(appContext))"
 ---
 
 <objective>
@@ -73,12 +73,14 @@ From RetrofitClient.java (현재 상태):
   <action>
     com.mindJellyProject.mindjelly.common 패키지에 AuthInterceptor.java를 신규 생성한다.
     - okhttp3.Interceptor를 implements한다.
-    - 생성자: public AuthInterceptor(SessionManager sessionManager) — sessionManager 필드에 저장.
-    - intercept(Chain chain): sessionManager.getToken()을 호출.
+    - 생성자: public AuthInterceptor(Context appContext) — appContext 필드에 저장.
+      (SessionManager는 외부에서 주입하지 않고 내부에서 getInstance(appContext)로 획득.
+       Plan E에서 appContext를 사용해 401 처리도 하므로 Context 보관이 필수.)
+    - intercept(Chain chain): SessionManager.getInstance(appContext).getToken() 호출.
       - 토큰이 null이 아니면: chain.request().newBuilder().header("Authorization", "Bearer " + token).build()로 새 Request 생성 후 chain.proceed().
       - 토큰이 null이면: 원본 request를 그대로 chain.proceed().
-    - import: okhttp3.Interceptor, okhttp3.Request, okhttp3.Response, java.io.IOException.
-    - 401 리다이렉트 처리는 이 클래스에서 하지 않음 — Plan E에서 별도 처리.
+    - import: android.content.Context, okhttp3.Interceptor, okhttp3.Request, okhttp3.Response, java.io.IOException.
+    - 401 리다이렉트 처리는 이 클래스에서 하지 않음 — Plan E에서 intercept() 확장.
   </action>
   <verify>
     <automated>grep -n "Bearer" app/src/main/java/com/mindJellyProject/mindjelly/common/AuthInterceptor.java</automated>
@@ -92,7 +94,7 @@ From RetrofitClient.java (현재 상태):
     기존 RetrofitClient.java를 다음과 같이 리팩터링한다.
     1. 필드 추가: private static RetrofitClient instance; (인스턴스 싱글턴으로 전환).
     2. 생성자 private RetrofitClient(Context context): SessionManager를 가져와
-       OkHttpClient.Builder().addInterceptor(new AuthInterceptor(sessionManager)).build()로
+       OkHttpClient.Builder().addInterceptor(new AuthInterceptor(context.getApplicationContext())).build()로
        OkHttpClient를 생성하고, 이를 Retrofit.Builder().baseUrl(BASE_URL)
        .addConverterFactory(GsonConverterFactory.create()).client(okHttpClient).build()에 전달.
     3. getInstance(Context context): instance가 null이면 new RetrofitClient(context) 생성.
