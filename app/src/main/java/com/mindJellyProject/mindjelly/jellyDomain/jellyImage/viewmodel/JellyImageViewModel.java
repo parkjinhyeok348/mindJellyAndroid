@@ -1,7 +1,9 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jellyImage.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.jellyDomain.jellyImage.model.JellyImageResDTO;
@@ -22,12 +24,13 @@ import java.util.List;
  * -----------------------------------------
  * 2025-01-03     Jinhyeok        주석 생성
  */
-public class JellyImageViewModel extends ViewModel {
+public class JellyImageViewModel extends AndroidViewModel {
 
     private final JellyImageRepository repository;
 
-    public JellyImageViewModel(JellyImageRepository repository) {
-        this.repository = repository;
+    public JellyImageViewModel(Application application) {
+        super(application);
+        this.repository = new JellyImageRepository(application.getApplicationContext());
     }
 
     public LiveData<Resource<JellyImageResDTO>> createJellyImage(JellyImageSaveReqDTO reqDTO) {

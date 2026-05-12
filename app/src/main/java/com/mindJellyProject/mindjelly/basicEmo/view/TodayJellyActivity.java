@@ -10,12 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.mindJellyProject.mindjelly.basicEmo.model.BasicEmoResDTO;
 import com.mindJellyProject.mindjelly.basicEmo.viewmodel.BasicEmoViewModel;
 import com.mindJellyProject.mindjelly.databinding.ActivityTodayJellyBinding;
-import com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.retrofit.JellyCombRepository;
 import com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.viewmodel.JellyCombViewModel;
 
 import java.util.List;
@@ -45,11 +45,11 @@ public class TodayJellyActivity extends AppCompatActivity {
         });
 
         // 젤리 조합 뷰모델 초기화
-        jellyCombViewModel = new JellyCombViewModel(new JellyCombRepository());
+        jellyCombViewModel = new ViewModelProvider(this).get(JellyCombViewModel.class);
 
         setupRecyclerView();
 
-        viewModel = new BasicEmoViewModel();
+        viewModel = new ViewModelProvider(this).get(BasicEmoViewModel.class);
         loadBasicEmos();
         
         // 초기에는 조합된 이미지 가리기

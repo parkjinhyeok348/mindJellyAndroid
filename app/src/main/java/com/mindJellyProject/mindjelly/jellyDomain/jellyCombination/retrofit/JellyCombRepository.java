@@ -1,6 +1,8 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.retrofit;
 
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -24,8 +26,8 @@ public class JellyCombRepository {
 
     private final JellyCombService jellyCombService;
 
-    public JellyCombRepository() {
-        this.jellyCombService = RetrofitClient.createService(JellyCombService.class);
+    public JellyCombRepository(Context context) {
+        this.jellyCombService = RetrofitClient.createService(JellyCombService.class, context);
     }
 
     // 젤리 조합 id로 젤리 조합 정보 호출

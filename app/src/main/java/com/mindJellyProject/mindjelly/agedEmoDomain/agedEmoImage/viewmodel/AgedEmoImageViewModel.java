@@ -1,5 +1,8 @@
 package com.mindJellyProject.mindjelly.agedEmoDomain.agedEmoImage.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmoImage.model.AgedEmoImageResDTO;
@@ -20,11 +23,12 @@ import java.util.List;
  * -----------------------------------------
  * 2025-01-06     Jinhyeok        주석 생성
  */
-public class AgedEmoImageViewModel {
+public class AgedEmoImageViewModel extends AndroidViewModel {
     private final AgedEmoImageRepository repository;
 
-    public AgedEmoImageViewModel(AgedEmoImageRepository repository) {
-        this.repository = repository;
+    public AgedEmoImageViewModel(Application application) {
+        super(application);
+        this.repository = new AgedEmoImageRepository(application.getApplicationContext());
     }
 
     // AgedEmoImage 생성

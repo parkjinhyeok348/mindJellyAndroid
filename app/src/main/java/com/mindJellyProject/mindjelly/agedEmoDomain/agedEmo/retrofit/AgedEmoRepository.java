@@ -1,5 +1,7 @@
 package com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.retrofit;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -32,8 +34,8 @@ import retrofit2.Response;
 public class AgedEmoRepository {
     private final AgedEmoService agedEmoService;
 
-    public AgedEmoRepository(){
-        this.agedEmoService = RetrofitClient.createService(AgedEmoService.class);
+    public AgedEmoRepository(Context context){
+        this.agedEmoService = RetrofitClient.createService(AgedEmoService.class, context);
     }
 
     // AgedEmo 생성

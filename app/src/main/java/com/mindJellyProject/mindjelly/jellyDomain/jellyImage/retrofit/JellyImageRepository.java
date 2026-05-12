@@ -1,5 +1,7 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jellyImage.retrofit;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -25,8 +27,8 @@ public class JellyImageRepository {
 
     private final JellyImageService jellyImageService;
 
-    public JellyImageRepository() {
-        this.jellyImageService = RetrofitClient.createService(JellyImageService.class);
+    public JellyImageRepository(Context context) {
+        this.jellyImageService = RetrofitClient.createService(JellyImageService.class, context);
     }
 
     // 젤리 이미지 생성

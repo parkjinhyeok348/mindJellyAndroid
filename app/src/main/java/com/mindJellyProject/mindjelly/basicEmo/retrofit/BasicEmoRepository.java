@@ -1,5 +1,7 @@
 package com.mindJellyProject.mindjelly.basicEmo.retrofit;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -24,8 +26,8 @@ public class BasicEmoRepository {
 
     private final BasicEmoService basicEmoService;
 
-    public BasicEmoRepository(){
-        this.basicEmoService = RetrofitClient.createService(BasicEmoService.class);
+    public BasicEmoRepository(Context context){
+        this.basicEmoService = RetrofitClient.createService(BasicEmoService.class, context);
     }
 
     // 기본 감정 ID로 조회

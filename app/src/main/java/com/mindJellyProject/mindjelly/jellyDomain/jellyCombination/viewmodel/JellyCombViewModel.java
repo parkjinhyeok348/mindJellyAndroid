@@ -1,5 +1,7 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.viewmodel;
 
+import android.app.Application;
+
 /**
  * @author : Jinhyeok
  * @className : com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.viewmodel
@@ -13,18 +15,19 @@ package com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.viewmodel;
  * 2025-01-03     Jinhyeok        주석 생성
  */
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.AndroidViewModel;
 
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.model.JellyCombResDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.retrofit.JellyCombRepository;
 
-public class JellyCombViewModel extends ViewModel {
+public class JellyCombViewModel extends AndroidViewModel {
 
     private final JellyCombRepository repository;
 
-    public JellyCombViewModel(JellyCombRepository repository) {
-        this.repository = repository;
+    public JellyCombViewModel(Application application) {
+        super(application);
+        this.repository = new JellyCombRepository(application.getApplicationContext());
     }
 
     public LiveData<Resource<JellyCombResDTO>> getJellyCombById(Long jellyCombId) {

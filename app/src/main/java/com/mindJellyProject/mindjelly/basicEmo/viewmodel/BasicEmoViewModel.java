@@ -1,5 +1,8 @@
 package com.mindJellyProject.mindjelly.basicEmo.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.mindJellyProject.mindjelly.basicEmo.model.BasicEmoResDTO;
@@ -21,11 +24,12 @@ import java.util.List;
       2025-01-03     Jinhyeok        주석 생성
 
  */
-public class BasicEmoViewModel {
+public class BasicEmoViewModel extends AndroidViewModel {
      private final BasicEmoRepository repository;
 
-     public BasicEmoViewModel(){
-         this.repository = new BasicEmoRepository();
+     public BasicEmoViewModel(Application application){
+         super(application);
+         this.repository = new BasicEmoRepository(application.getApplicationContext());
      }
 
      public LiveData<Resource<BasicEmoResDTO>> getBasicEmoById(Long emoId){

@@ -1,5 +1,7 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jelly.retrofit;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -28,8 +30,8 @@ import retrofit2.Response;
 public class JellyRepository {
     private final JellyService jellyService;
 
-    public JellyRepository() {
-        this.jellyService = RetrofitClient.createService(JellyService.class);
+    public JellyRepository(Context context) {
+        this.jellyService = RetrofitClient.createService(JellyService.class, context);
     }
 
     // 젤리 생성

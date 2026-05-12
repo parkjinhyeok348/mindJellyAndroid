@@ -1,7 +1,9 @@
 package com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model.AgedEmo;
 import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.model.AgedEmoMuseumResDTO;
@@ -25,12 +27,13 @@ import java.util.List;
  * -----------------------------------------
  * 2025-01-03     Jinhyeok        주석 생성
  */
-public class AgedEmoViewModel extends ViewModel {
+public class AgedEmoViewModel extends AndroidViewModel {
 
     private final AgedEmoRepository repository;
 
-    public AgedEmoViewModel(AgedEmoRepository repository) {
-        this.repository = repository;
+    public AgedEmoViewModel(Application application) {
+        super(application);
+        this.repository = new AgedEmoRepository(application.getApplicationContext());
     }
 
     public LiveData<Resource<AgedEmo>> createAgedEmo(AgedEmoSaveReqDTO dto) {

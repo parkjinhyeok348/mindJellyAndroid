@@ -1,7 +1,9 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jelly.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.Jelly;
@@ -26,11 +28,12 @@ import java.util.List;
  * -----------------------------------------
  * 2025-01-03     Jinhyeok        주석 생성
  */
-public class JellyViewModel extends ViewModel {
+public class JellyViewModel extends AndroidViewModel {
     private final JellyRepository repository;
 
-    public JellyViewModel() {
-        this.repository = new JellyRepository();
+    public JellyViewModel(Application application) {
+        super(application);
+        this.repository = new JellyRepository(application.getApplicationContext());
     }
 
     public LiveData<Resource<Jelly>> createJelly(JellySaveReqDTO reqDTO) {
