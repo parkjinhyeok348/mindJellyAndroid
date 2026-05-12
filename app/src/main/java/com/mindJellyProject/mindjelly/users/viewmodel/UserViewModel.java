@@ -13,8 +13,11 @@ package com.mindJellyProject.mindjelly.users.viewmodel;
  * 2025-01-02     Jinhyeok        주석 생성
  */
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.users.model.FindPasswordReqDTO;
@@ -24,12 +27,13 @@ import com.mindJellyProject.mindjelly.users.model.UserUpdateReqDTO;
 import com.mindJellyProject.mindjelly.users.model.Users;
 import com.mindJellyProject.mindjelly.users.retrofit.UserRepository;
 
-public class UserViewModel extends ViewModel {
+public class UserViewModel extends AndroidViewModel {
 
     private final UserRepository userRepository;
 
-    public UserViewModel() {
-        this.userRepository = new UserRepository();
+    public UserViewModel(@NonNull Application application) {
+        super(application);
+        this.userRepository = new UserRepository(application.getApplicationContext());
     }
 
     // 사용자 생성

@@ -1,5 +1,7 @@
 package com.mindJellyProject.mindjelly.users.retrofit;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,6 +13,9 @@ import com.mindJellyProject.mindjelly.users.model.UserSaveReqDTO;
 import com.mindJellyProject.mindjelly.users.model.UserUpdateReqDTO;
 import com.mindJellyProject.mindjelly.users.model.Users;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,8 +31,8 @@ public class UserRepository {
 
     private final UserService userService;
 
-    public UserRepository() {
-        this.userService = RetrofitClient.createService(UserService.class);
+    public UserRepository(Context context) {
+        this.userService = RetrofitClient.createService(UserService.class, context);
     }
 
     // 사용자 생성
@@ -103,7 +108,7 @@ public class UserRepository {
                 if (response.isSuccessful() && response.body() != null) {
                     resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error(getLoginErrorMessage(response)));
                 }
             }
 
@@ -218,6 +223,21 @@ public class UserRepository {
             }
         });
         return resultLiveData;
+    }
+
+    private String getLoginErrorMessage(Response<?> response) {
+        ResponseBody errorBody = response.errorBody();
+        if (errorBody != null) {
+            try {
+                String body = errorBody.string();
+                if (body != null && !body.trim().isEmpty()) {
+                    return body;
+                }
+            } catch (IOException ignored) {
+                // Fall through to Retrofit response message.
+            }
+        }
+        return "Error: " + response.message();
     }
 
     // 사용자 삭제

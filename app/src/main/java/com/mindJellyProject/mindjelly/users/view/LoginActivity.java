@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.mindJellyProject.mindjelly.MainActivity;
 import com.mindJellyProject.mindjelly.R;
+import com.mindJellyProject.mindjelly.common.SessionManager;
 import com.mindJellyProject.mindjelly.users.model.UserLoginReqDTO;
 import com.mindJellyProject.mindjelly.users.viewmodel.UserViewModel;
 
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnSignup, btnFindEamil,btnFindPassword;
     private UserViewModel userViewModel;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         btnFindPassword = findViewById(R.id.btn_find_password);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        sessionManager = SessionManager.getInstance(this);
 
         // 로그인 버튼 클릭 이벤트
         btnLogin.setOnClickListener(v -> {
@@ -53,18 +56,24 @@ public class LoginActivity extends AppCompatActivity {
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(LoginActivity.this, "이메일과 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                return;
             }
             // Login 요청
             UserLoginReqDTO reqDTO = new UserLoginReqDTO(email, password);
             userViewModel.login(reqDTO).observe(this, resource -> {
-                if (resource != null && resource.getData() != null) {
+                if (resource != null && resource.isSuccess() && resource.getData() != null) {
+                    sessionManager.saveToken(resource.getData());
                     // 로그인 성공 시 Main 페이지로 이동
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    // 실패 시 Toast 메시지 표시
-                    Toast.makeText(this, "이메일 혹은 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                    String errorMessage = resource != null ? resource.getError() : null;
+                    if (isEmailVerificationRequired(errorMessage)) {
+                        Toast.makeText(this, "이메일 인증이 필요합니다", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "이메일 혹은 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         });
@@ -87,5 +96,10 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, FindPasswordActivity.class);
             startActivity(intent);
         });
+    }
+
+    private boolean isEmailVerificationRequired(String errorMessage) {
+        return errorMessage != null
+                && (errorMessage.contains("EMAIL_NOT_VERIFIED") || errorMessage.contains("이메일 인증"));
     }
 }

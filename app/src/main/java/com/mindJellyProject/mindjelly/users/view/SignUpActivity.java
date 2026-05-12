@@ -13,16 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.users.model.UserSaveReqDTO;
-import com.mindJellyProject.mindjelly.users.model.Users;
-import com.mindJellyProject.mindjelly.users.retrofit.UserService;
 import com.mindJellyProject.mindjelly.users.viewmodel.UserViewModel;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText etMobilePhone, etEmail, etPassword, etUserName, etNickName, etBirthDate, etAgeRange;
@@ -30,7 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
     private CheckBox cbMarketing;
     private Button btnRegister;
 
-    private final UserViewModel userViewModel = new UserViewModel();
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         initViews();
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
