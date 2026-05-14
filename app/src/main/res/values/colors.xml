@@ -2,4 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Phase 2 신규 색상 (02-UI-SPEC.md Color 섹션) -->
+    <color name="text_primary">#FF333333</color>
+    <color name="text_secondary">#FF666666</color>
+    <color name="text_hint">#FF999999</color>
+    <color name="surface_card">#E6FFFFFF</color>
+    <color name="accent_blue">#FF0000FF</color>
+    <color name="badge_waiting_bg">#FFFFEEBA</color>
+    <color name="badge_waiting_text">#FF856404</color>
+    <color name="badge_aging_bg">#FFD1ECF1</color>
+    <color name="badge_aging_text">#FF0C5460</color>
+    <color name="badge_complete_bg">#FFD4EDDA</color>
+    <color name="badge_complete_text">#FF155724</color>
+    <color name="error_red">#FFDC3545</color>
+    <color name="divider_neutral">#FFEEEEEE</color>
 </resources>
