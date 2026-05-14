@@ -3,6 +3,7 @@ package com.mindJellyProject.mindjelly.jellyDomain.jelly.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,16 +13,34 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.mindJellyProject.mindjelly.R;
+import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.view.AgingRoomActivity;
+import com.mindJellyProject.mindjelly.common.ErrorMessageUtil;
 import com.mindJellyProject.mindjelly.common.SessionManager;
+import com.mindJellyProject.mindjelly.databinding.ActivityJellyDrawerBinding;
+import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.viewmodel.JellyViewModel;
 import com.mindJellyProject.mindjelly.users.view.LoginActivity;
 
+import java.util.List;
+
+/**
+ * @author : Jinhyeok
+ * @className : com.mindJellyProject.mindjelly.jellyDomain.jelly.view
+ * @description : 젤리서랍 Activity — ViewBinding 전환, 빈 상태 UI, 로딩 인디케이터, 숙성시키기 콜백, 한국어 에러
+ * @modification : 2026-05-14(Phase2-D) ViewBinding + 빈 상태(DRAW-04) + isLoading(QUAL-01) + startAging(DRAW-03) + 한국어 에러(QUAL-02)
+ * @date : 2025-01-03
+ *
+ * ====개정이력(Modification Information)====
+ * 수정일        수정자        수정내용
+ * -----------------------------------------
+ * 2025-01-03     Jinhyeok        주석 생성
+ * 2026-05-14     Phase2-D        ViewBinding 전환, 빈 상태/로딩/startAging/한국어 에러 완성
+ */
 public class JellyDrawerActivity extends AppCompatActivity {
     private static final String TAG = "JellyDrawerActivity";
-    private RecyclerView rvJellyList;
+    private ActivityJellyDrawerBinding binding;
     private JellyDrawerAdapter adapter;
     private JellyViewModel jellyViewModel;
 
@@ -29,30 +48,50 @@ public class JellyDrawerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_jelly_drawer);
-        
+
+        // ViewBinding 초기화
+        binding = ActivityJellyDrawerBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         Log.d(TAG, "onCreate: Initializing activity");
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // View 초기화
-        rvJellyList = findViewById(R.id.rvJellyList);
-        rvJellyList.setLayoutManager(new LinearLayoutManager(this));
+        // RecyclerView 초기화
+        binding.rvJellyList.setLayoutManager(new LinearLayoutManager(this));
         adapter = new JellyDrawerAdapter();
-        rvJellyList.setAdapter(adapter);
+        binding.rvJellyList.setAdapter(adapter);
 
         // ViewModel 초기화
         jellyViewModel = new ViewModelProvider(this).get(JellyViewModel.class);
 
-        // 젤리 리스트 요청
+        // isLoading observe — pbLoading VISIBLE/GONE 토글 (QUAL-01)
+        jellyViewModel.isLoading.observe(this, loading -> {
+            binding.pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+        });
+
+        // startAging 콜백 연결 (DRAW-03)
+        adapter.setOnStartAgingListener(jellyId -> {
+            jellyViewModel.startAging(jellyId).observe(this, resource -> {
+                jellyViewModel.isLoading.postValue(false);
+                if (resource != null && resource.isSuccess()) {
+                    Toast.makeText(this, getString(R.string.success_aging_started), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(JellyDrawerActivity.this, AgingRoomActivity.class));
+                } else if (resource != null && resource.isError()) {
+                    Toast.makeText(this, ErrorMessageUtil.getKoreanMessage(resource, this), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+        // userId 검증 (T-02D-01)
         SessionManager sessionManager = SessionManager.getInstance(this);
-        Long userId = sessionManager.getUserId();
+        long userId = sessionManager.getUserId();
         if (userId == -1L) {
-            Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -60,19 +99,34 @@ public class JellyDrawerActivity extends AppCompatActivity {
             return;
         }
         Log.d(TAG, "Requesting jelly list for userId: " + userId);
-        
+
+        // getJellyList 호출 — 로딩 시작
+        jellyViewModel.isLoading.postValue(true);
         jellyViewModel.getJellyList(userId).observe(this, resource -> {
-            if (resource != null) {
-                if (resource.getData() != null) {
-                    Log.d(TAG, "Successfully loaded " + resource.getData().size() + " jellies");
-                    adapter.submitList(resource.getData());
+            jellyViewModel.isLoading.postValue(false);
+            if (resource != null && resource.isSuccess()) {
+                List<JellyDrawerResDTO> list = resource.getData();
+                if (list == null || list.isEmpty()) {
+                    // 빈 상태 (DRAW-04)
+                    binding.rvJellyList.setVisibility(View.GONE);
+                    binding.tvEmptyState.setVisibility(View.VISIBLE);
+                    binding.tvEmptyStateBody.setVisibility(View.VISIBLE);
+                    Log.d(TAG, "Jelly list is empty — showing empty state");
                 } else {
-                    String errorMessage = resource.getError() != null ? resource.getError() : "Unknown Error";
-                    Log.e(TAG, "Failed to load jelly list: " + errorMessage);
-                    Toast.makeText(JellyDrawerActivity.this, "젤리 리스트를 불러오는데 실패했습니다: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    // 리스트 표시
+                    binding.rvJellyList.setVisibility(View.VISIBLE);
+                    binding.tvEmptyState.setVisibility(View.GONE);
+                    binding.tvEmptyStateBody.setVisibility(View.GONE);
+                    adapter.submitList(list);
+                    Log.d(TAG, "Successfully loaded " + list.size() + " jellies");
                 }
-            } else {
-                Log.e(TAG, "Resource is null");
+            } else if (resource != null && resource.isError()) {
+                // 에러 상태 — 한국어 Toast (QUAL-02)
+                binding.rvJellyList.setVisibility(View.GONE);
+                binding.tvEmptyState.setVisibility(View.GONE);
+                binding.tvEmptyStateBody.setVisibility(View.GONE);
+                Log.e(TAG, "Failed to load jelly list: " + resource.getError());
+                Toast.makeText(this, ErrorMessageUtil.getKoreanMessage(resource, this), Toast.LENGTH_SHORT).show();
             }
         });
     }
