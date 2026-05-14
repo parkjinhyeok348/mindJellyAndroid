@@ -1,5 +1,6 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jelly.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mindJellyProject.mindjelly.R;
+import com.mindJellyProject.mindjelly.common.SessionManager;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.viewmodel.JellyViewModel;
+import com.mindJellyProject.mindjelly.users.view.LoginActivity;
 
 public class JellyDrawerActivity extends AppCompatActivity {
     private static final String TAG = "JellyDrawerActivity";
@@ -46,7 +49,16 @@ public class JellyDrawerActivity extends AppCompatActivity {
         jellyViewModel = new ViewModelProvider(this).get(JellyViewModel.class);
 
         // 젤리 리스트 요청
-        Long userId = 1L;
+        SessionManager sessionManager = SessionManager.getInstance(this);
+        Long userId = sessionManager.getUserId();
+        if (userId == -1L) {
+            Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
         Log.d(TAG, "Requesting jelly list for userId: " + userId);
         
         jellyViewModel.getJellyList(userId).observe(this, resource -> {
