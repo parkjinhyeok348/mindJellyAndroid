@@ -11,11 +11,13 @@ import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.Jelly;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyResDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellySaveReqDTO;
+import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyStartAgingReqDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyUpdateReqDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyUpdateResDTO;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,7 +26,7 @@ import retrofit2.Response;
  * @author : Jinhyeok
  * @className : com.mindJellyProject.mindjelly.jellyDomain.jelly.retrofit
  * @description : Jelly Repository
- * @modification : 2025-01-03(Jinhyeok) 수정
+ * @modification : 2026-05-14(Phase2) startAging 메서드 추가 (DRAW-03)
  * @date : 2025-01-03
  */
 public class JellyRepository {
@@ -133,6 +135,27 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<List<JellyDrawerResDTO>> call, Throwable t) {
+                liveData.postValue(Resource.error(t.getMessage()));
+            }
+        });
+        return liveData;
+    }
+
+    // 숙성 시작 — PATCH /api/jelly/{jellyId} (D-03, DRAW-03)
+    public LiveData<Resource<ResponseBody>> startAging(Long jellyId, JellyStartAgingReqDTO reqDTO) {
+        MutableLiveData<Resource<ResponseBody>> liveData = new MutableLiveData<>();
+        jellyService.startAging(jellyId, reqDTO).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    liveData.postValue(Resource.success(response.body()));
+                } else {
+                    liveData.postValue(Resource.error("Error: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 liveData.postValue(Resource.error(t.getMessage()));
             }
         });
