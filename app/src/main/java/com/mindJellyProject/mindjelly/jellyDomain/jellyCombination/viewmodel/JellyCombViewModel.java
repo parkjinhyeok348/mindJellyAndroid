@@ -6,13 +6,14 @@ import android.app.Application;
  * @author : Jinhyeok
  * @className : com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.viewmodel
  * @description :
- * @modification : 2025-01-03(Jinhyeok) 수정
+ * @modification : 2026-05-14(Phase2) getJellyCombId 메서드 추가 (Pitfall 1 해결)
  * @date : 2025-01-03
  * <p>
  * ====개정이력(Modification Information)====
  * 수정일        수정자        수정내용
  * -----------------------------------------
  * 2025-01-03     Jinhyeok        주석 생성
+ * 2026-05-14     Phase2          getJellyCombId(Long, Long) 추가
  */
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.AndroidViewModel;
@@ -37,5 +38,12 @@ public class JellyCombViewModel extends AndroidViewModel {
     public LiveData<Resource<String>> getJellyIcon(Long firstEmo, Long secondEmo, Boolean isAwaken) {
         return repository.getJellyIcon(firstEmo, secondEmo, isAwaken);
     }
-}
 
+    /**
+     * 두 감정 조합으로 jellyCombId를 조회한다 (Pitfall 1 해결).
+     * TodayJellyActivity에서 cachedJellyCombId 캐싱에 사용.
+     */
+    public LiveData<Resource<Long>> getJellyCombId(Long firstEmo, Long secondEmo) {
+        return repository.getJellyCombId(firstEmo, secondEmo);
+    }
+}
