@@ -65,7 +65,7 @@ public class JellyDrawerActivity extends AppCompatActivity {
             if (resource != null) {
                 if (resource.getData() != null) {
                     Log.d(TAG, "Successfully loaded " + resource.getData().size() + " jellies");
-                    adapter.setJellyList(resource.getData());
+                    adapter.submitList(resource.getData());
                 } else {
                     String errorMessage = resource.getError() != null ? resource.getError() : "Unknown Error";
                     Log.e(TAG, "Failed to load jelly list: " + errorMessage);

@@ -1,30 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/basic_background"
-    android:orientation="vertical"
     tools:context=".jellyDomain.jelly.view.JellyDrawerActivity">
 
-    <!-- 
+    <!--
         1080 x 1920 기준 규격 환산 (3px = 1dp 기준)
         - 상단 여백: 818px -> 약 273dp (1920 - 942 - 160)
         - 하단 여백: 160px -> 약 53dp
-        - 좌측 여백: 46px -> 약 15dp
+        - 좌측 여백: 46px -> 약 15dp → 16dp 표준화
         - 우측 여백: 47px -> 약 16dp (1080 - 987 - 46)
     -->
+
+    <!-- 젤리 목록 RecyclerView — 리스트 존재 시 VISIBLE, 기본 GONE -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvJellyList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="273dp"
         android:layout_marginBottom="53dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:scrollbars="vertical"
+        android:visibility="gone"
         tools:listitem="@android:layout/simple_list_item_1" />
 
-</LinearLayout>
+    <!-- 빈 상태 타이틀 — 리스트가 비었을 때 VISIBLE -->
+    <TextView
+        android:id="@+id/tvEmptyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="273dp"
+        android:gravity="center"
+        android:text="@string/empty_drawer_title"
+        android:textColor="@color/text_hint"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <!-- 빈 상태 본문 — 리스트가 비었을 때 VISIBLE -->
+    <TextView
+        android:id="@+id/tvEmptyStateBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="316dp"
+        android:gravity="center"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="@string/empty_drawer_body"
+        android:textColor="@color/text_hint"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <!-- 로딩 인디케이터 — 네트워크 요청 중 VISIBLE -->
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="273dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+</FrameLayout>
