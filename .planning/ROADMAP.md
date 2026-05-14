@@ -49,7 +49,7 @@ Plans:
 - [x] 01-B-PLAN.md — AuthInterceptor + RetrofitClient OkHttpClient (Wave 1)
 - [x] 01-C-PLAN.md — LoginActivity JWT 저장 + 에러 세분화 + SplashActivity 라우팅 + network_security_config (Wave 2)
 - [x] 01-D-PLAN.md — SignUpActivity createUser 결과 옵저빙 완성 (Wave 2)
-- [ ] 01-E-PLAN.md — userId 하드코딩 제거 + 6개 Repository Context 업데이트 + 401 처리 (Wave 3)
+- [x] 01-E-PLAN.md — userId 하드코딩 제거 + 6개 Repository Context 업데이트 + 401 처리 (Wave 3)
 
 
 ---
@@ -122,10 +122,10 @@ Plans:
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| QUAL-05 | Phase 1 | Pending |
+| AUTH-01 | Phase 1 | Complete |
+| AUTH-02 | Phase 1 | Complete |
+| AUTH-03 | Phase 1 | Complete |
+| QUAL-05 | Phase 1 | Complete |
 | JELLY-01 | Phase 2 | Pending |
 | JELLY-02 | Phase 2 | Pending |
 | JELLY-03 | Phase 2 | Pending |

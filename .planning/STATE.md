@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-05-12T07:23:45Z"
+last_updated: "2026-05-14T00:00:00Z"
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
-  percent: 80
+  completed_plans: 5
+  percent: 100
 ---
 
 # Project State: MindJelly (마음젤리)
@@ -24,14 +24,14 @@ See: .planning/PROJECT.md (updated 2026-05-12)
 ## Current Status
 
 **Milestone:** v1.0
-**Active Phase:** Phase 1 — Auth 기반 (in progress)
-**Last Action:** Plan 01-D completed — SignUpActivity now observes createUser results, shows Korean email-verification guidance, and returns successful signup users to LoginActivity
+**Active Phase:** Phase 2 — 핵심 루프 (not started)
+**Last Action:** Plan 01-E completed — Phase 1 Auth 기반 fully done: userId hardcoding removed, all 6 repositories context-aware, 401 auto-logout wired in AuthInterceptor
 
 ## Phase Progress
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| Phase 1: Auth 기반 | In Progress | 4/5 plans complete — 01-D signup result observing ready; 01-E userId hardcoding removal remains |
+| Phase 1: Auth 기반 | Complete | 5/5 plans complete — SessionManager, AuthInterceptor, RetrofitClient, Login/Signup flows, userId hardcoding removed |
 | Phase 2: 핵심 루프 | Not Started | 감정 선택 → 일기 작성 → 젤리서랍 |
 | Phase 3: 숙성 메커니즘 | Not Started | AgingRoom 카운트다운 |
 | Phase 4: 젤리뮤지엄 | Not Started | 숙성 완료 컬렉션 |
@@ -54,6 +54,8 @@ See: .planning/PROJECT.md (updated 2026-05-12)
 | 2026-05-12 | Login success persists JWT before navigation | Authenticated app sessions must survive restart and feed SplashActivity routing |
 | 2026-05-12 | Debug cleartext uses resource overlay | Main network security config denies cleartext while debug overlay permits emulator HTTP |
 | 2026-05-12 | Signup observes createUser results | AUTH-01/AUTH-02 completion requires success/failure UI feedback instead of fire-and-forget submission |
+| 2026-05-14 | AndroidViewModel for Context-dependent repositories | ViewModelProvider auto-injects Application so Activity call-sites need no changes when repositories require Context |
+| 2026-05-14 | getUserId() returns long primitive with -1L sentinel | Not nullable Long — callers check == -1L, not null, per SessionManager contract |
 
 ## Execution Metrics
 
@@ -63,6 +65,7 @@ See: .planning/PROJECT.md (updated 2026-05-12)
 | 2026-05-12 | 01-auth | B | 15min | 2 | 2 |
 | 2026-05-12 | 01-auth | C | 25min | 3 | 8 |
 | 2026-05-12 | 01-auth | D | 8min | 1 | 2 |
+| 2026-05-14 | 01-auth | E | ~30min | 2 | 15 |
 
 ---
 *Initialized: 2026-05-12*
