@@ -213,7 +213,7 @@ public class UserRepository {
                 if (response.isSuccessful() && response.body() != null) {
                     resultLiveData.postValue(Resource.success(response.body()));
                 } else {
-                    resultLiveData.postValue(Resource.error("Error: " + response.message()));
+                    resultLiveData.postValue(Resource.error(getLoginErrorMessage(response)));
                 }
             }
 
