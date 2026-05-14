@@ -21,13 +21,20 @@ MindJelly는 매일 자신의 감정을 2가지 젤리로 선택하고 일기를
 - ✓ SplashActivity 진입점 및 MainActivity 허브 화면 구조
 - ✓ 전체 화면 선언 (AndroidManifest.xml에 모든 Activity 등록됨)
 
+<!-- Validated in Phase 1: Auth 기반 (2026-05-14) -->
+
+- ✓ 이메일 + 비밀번호로 회원가입 (이메일 인증 안내 포함) — `SignUpActivity`, `UserRepository` (AUTH-01)
+- ✓ 이메일 + 비밀번호로 로그인 및 세션 유지 (앱 재시작 후에도 유지) — `LoginActivity`, `SessionManager`, `SplashActivity` (AUTH-02)
+- ✓ 모든 API 요청에 JWT Bearer 토큰 자동 포함 + 401 자동 로그아웃 — `AuthInterceptor`, `RetrofitClient` (AUTH-03)
+- ✓ userId 하드코딩 제거, 모든 Repository가 Context 기반 Retrofit 사용 — `JellyDrawerActivity`, 6개 Repository (QUAL-05)
+
 ### Active
 
 <!-- v1 목표 — 출시하고 검증할 기능들 -->
 
 **인증 (Auth)**
-- [ ] 이메일 + 비밀번호로 회원가입 (이메일 인증 포함)
-- [ ] 이메일 + 비밀번호로 로그인 및 세션 유지
+- [x] 이메일 + 비밀번호로 회원가입 (이메일 인증 포함) — Phase 1 완료
+- [x] 이메일 + 비밀번호로 로그인 및 세션 유지 — Phase 1 완료
 - [ ] 로그아웃
 - [ ] 이메일 찾기 / 비밀번호 재설정
 
@@ -65,7 +72,7 @@ MindJelly는 매일 자신의 감정을 2가지 젤리로 선택하고 일기를
 
 - **기존 코드베이스:** 2025년 1월 기준 API 연결 작업이 진행된 상태. 모든 화면 Activity가 선언되어 있으나 일부 onClick 핸들러가 비어있음 (MainActivity의 AgingRoom, JellyMuseum, SelectionBox 버튼).
 - **백엔드:** Spring Boot REST API. 개발 환경 BASE_URL은 `http://10.0.2.2:8080/` (Android 에뮬레이터 로컬호스트). 실기기 테스트를 위해 환경별 URL 설정이 필요함.
-- **보안 미비:** `usesCleartextTraffic="true"` 설정으로 HTTP 통신 중. 인증 토큰 관리(JWT 헤더 주입 등) 아직 미구현.
+- **인증 완료 (Phase 1):** SessionManager(EncryptedSharedPreferences), AuthInterceptor(JWT Bearer 자동 주입 + 401 자동 로그아웃), RetrofitClient(Context 기반) 구현 완료. HTTP 통신은 에뮬레이터 개발용 debug 오버레이로 허용, release는 HTTPS 전용.
 - **감정 목록:** basicEmo 도메인에서 API로 감정 목록을 받아옴. 합성 결과(AgedEmo)도 서버 정의.
 - **팀 규모:** 1인 개발 (Jinhyeok)
 
@@ -105,4 +112,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-12 after initialization*
+*Last updated: 2026-05-14 after Phase 1 completion*
