@@ -488,7 +488,7 @@ jellyViewModel.getJellyList(userId).observe(this, resource -> {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **jellyCombId 취득 경로**
    - What we know: 합성 프리뷰 API는 이미지 URL String만 반환. JellySaveReqDTO에는 jellyCombId 필수.

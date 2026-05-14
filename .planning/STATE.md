@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-05-14T00:00:00Z"
+last_updated: "2026-05-14T02:00:00Z"
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 5
+  total_plans: 9
   completed_plans: 5
-  percent: 100
+  percent: 25
 ---
 
 # Project State: MindJelly (마음젤리)
@@ -19,20 +19,20 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-12)
 
 **Core value:** 오늘 선택한 두 감정이 일주일 후 합성된 새로운 감정으로 숙성되어 나만의 감정 성장 기록이 쌓인다.
-**Current focus:** Phase 01 — auth
+**Current focus:** Phase 02 — 핵심 루프
 
 ## Current Status
 
 **Milestone:** v1.0
-**Active Phase:** Phase 2 — 핵심 루프 (not started)
-**Last Action:** discuss-phase 2 completed — 02-CONTEXT.md written: backend APIs confirmed ready, combo preview decisions locked (PATCH /api/jelly/{id} for startAging, GET /jellyComb/jelly-icon/{firstEmo}/{secondEmo}/false for preview)
+**Active Phase:** Phase 2 — 핵심 루프 (planned — ready to execute)
+**Last Action:** plan-phase 2 completed — 4 plans (A–D) written across 3 waves; 11 requirements mapped (JELLY-01~05, DRAW-01~04, QUAL-01~02)
 
 ## Phase Progress
 
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Phase 1: Auth 기반 | Complete | 5/5 plans complete — SessionManager, AuthInterceptor, RetrofitClient, Login/Signup flows, userId hardcoding removed |
-| Phase 2: 핵심 루프 | Not Started | 감정 선택 → 일기 작성 → 젤리서랍 |
+| Phase 2: 핵심 루프 | Planned | 4 plans (A-D), 3 waves — 02-A-PLAN.md ~ 02-D-PLAN.md |
 | Phase 3: 숙성 메커니즘 | Not Started | AgingRoom 카운트다운 |
 | Phase 4: 젤리뮤지엄 | Not Started | 숙성 완료 컬렉션 |
 
