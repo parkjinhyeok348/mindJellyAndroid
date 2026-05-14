@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-05-12)
 
 **Milestone:** v1.0
 **Active Phase:** Phase 2 — 핵심 루프 (not started)
-**Last Action:** Plan 01-E completed — Phase 1 Auth 기반 fully done: userId hardcoding removed, all 6 repositories context-aware, 401 auto-logout wired in AuthInterceptor
+**Last Action:** discuss-phase 2 completed — 02-CONTEXT.md written: backend APIs confirmed ready, combo preview decisions locked (PATCH /api/jelly/{id} for startAging, GET /jellyComb/jelly-icon/{firstEmo}/{secondEmo}/false for preview)
 
 ## Phase Progress
 
