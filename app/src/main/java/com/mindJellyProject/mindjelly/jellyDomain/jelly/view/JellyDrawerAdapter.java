@@ -1,28 +1,54 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jelly.view;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 
+import com.bumptech.glide.Glide;
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
-public class JellyDrawerAdapter extends RecyclerView.Adapter<JellyDrawerAdapter.ViewHolder> {
+public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDrawerAdapter.ViewHolder> {
 
-    private List<JellyDrawerResDTO> jellyList = new ArrayList<>();
+    private static final DiffUtil.ItemCallback<JellyDrawerResDTO> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<JellyDrawerResDTO>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull JellyDrawerResDTO a, @NonNull JellyDrawerResDTO b) {
+                    return a.getJellyId().equals(b.getJellyId());
+                }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public void setJellyList(List<JellyDrawerResDTO> list) {
-        this.jellyList = list;
-        notifyDataSetChanged();
+                @Override
+                public boolean areContentsTheSame(@NonNull JellyDrawerResDTO a, @NonNull JellyDrawerResDTO b) {
+                    return a.getJellyId().equals(b.getJellyId())
+                            && Objects.equals(a.getStatus(), b.getStatus())
+                            && Objects.equals(a.getCreateDate(), b.getCreateDate());
+                }
+            };
+
+    private final String serverUrl = "http://10.0.2.2:8080";
+
+    public interface OnStartAgingListener {
+        void onStartAging(Long jellyId);
+    }
+
+    private OnStartAgingListener startAgingListener;
+
+    public void setOnStartAgingListener(OnStartAgingListener l) {
+        this.startAgingListener = l;
+    }
+
+    public JellyDrawerAdapter() {
+        super(DIFF_CALLBACK);
     }
 
     @NonNull
@@ -34,25 +60,81 @@ public class JellyDrawerAdapter extends RecyclerView.Adapter<JellyDrawerAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        JellyDrawerResDTO jelly = jellyList.get(position);
-        holder.tvJellyId.setText("Jelly ID: " + jelly.getJellyId());
+        JellyDrawerResDTO jelly = getItem(position);
+
+        // 날짜 표시
         holder.tvCreateDate.setText(jelly.getCreateDate());
-        holder.tvAgingStatus.setText(jelly.getAging() ? "에이징 중" : "완성");
+
+        // 감정 아이콘 1 Glide 로딩
+        Glide.with(holder.itemView.getContext())
+                .load(serverUrl + jelly.getEmo1Icon())
+                .placeholder(android.R.drawable.ic_menu_report_image)
+                .error(android.R.drawable.stat_notify_error)
+                .into(holder.emo1ImageView);
+
+        // 감정 아이콘 2 Glide 로딩
+        Glide.with(holder.itemView.getContext())
+                .load(serverUrl + jelly.getEmo2Icon())
+                .placeholder(android.R.drawable.ic_menu_report_image)
+                .error(android.R.drawable.stat_notify_error)
+                .into(holder.emo2ImageView);
+
+        // 상태 배지 3-state 처리
+        android.content.Context ctx = holder.itemView.getContext();
+        String status = jelly.getStatus();
+        int bgColor, textColor;
+        String statusText;
+
+        if ("AGING".equals(status)) {
+            bgColor = R.color.badge_aging_bg;
+            textColor = R.color.badge_aging_text;
+            statusText = ctx.getString(R.string.status_aging);
+            holder.btnStartAging.setVisibility(View.GONE);
+        } else if ("MATURED".equals(status)) {
+            bgColor = R.color.badge_complete_bg;
+            textColor = R.color.badge_complete_text;
+            statusText = ctx.getString(R.string.status_complete);
+            holder.btnStartAging.setVisibility(View.GONE);
+        } else {
+            // WAITING 또는 null/unknown → fallback
+            bgColor = R.color.badge_waiting_bg;
+            textColor = R.color.badge_waiting_text;
+            statusText = ctx.getString(R.string.status_waiting);
+            holder.btnStartAging.setVisibility(View.VISIBLE);
+        }
+
+        holder.tvAgingStatus.setText(statusText);
+        holder.tvAgingStatus.setTextColor(ContextCompat.getColor(ctx, textColor));
+
+        // GradientDrawable mutate — 공유 drawable 상태 오염 방지
+        android.graphics.drawable.Drawable bg = holder.tvAgingStatus.getBackground();
+        if (bg instanceof android.graphics.drawable.GradientDrawable) {
+            ((android.graphics.drawable.GradientDrawable) bg.mutate())
+                    .setColor(ContextCompat.getColor(ctx, bgColor));
+        } else {
+            holder.tvAgingStatus.setBackgroundColor(ContextCompat.getColor(ctx, bgColor));
+        }
+
+        // 숙성시키기 버튼 클릭 리스너
+        holder.btnStartAging.setOnClickListener(v -> {
+            if (startAgingListener != null) {
+                startAgingListener.onStartAging(jelly.getJellyId());
+            }
+        });
     }
 
-    @Override
-    public int getItemCount() {
-        return jellyList.size();
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvJellyId, tvCreateDate, tvAgingStatus;
+    static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
+        ImageView emo1ImageView, emo2ImageView;
+        TextView tvCreateDate, tvAgingStatus;
+        Button btnStartAging;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvJellyId = itemView.findViewById(R.id.tvJellyId);
+            emo1ImageView = itemView.findViewById(R.id.emo1ImageView);
+            emo2ImageView = itemView.findViewById(R.id.emo2ImageView);
             tvCreateDate = itemView.findViewById(R.id.tvCreateDate);
             tvAgingStatus = itemView.findViewById(R.id.tvAgingStatus);
+            btnStartAging = itemView.findViewById(R.id.btnStartAging);
         }
     }
 }
