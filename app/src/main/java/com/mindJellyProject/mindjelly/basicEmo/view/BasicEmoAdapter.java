@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,7 @@ public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHo
 
     private List<BasicEmoResDTO> emos = new ArrayList<>();
     private final String serverUrl = "http://10.0.2.2:8080";
-    
+
     // 선택된 포지션들을 관리하는 리스트 (최대 2개)
     private final List<Integer> selectedPositions = new ArrayList<>();
 
@@ -52,17 +54,20 @@ public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BasicEmoResDTO emo = emos.get(position);
-        
+
         String fullImageUrl = serverUrl + emo.getEmoIcon();
-        
+
         Glide.with(holder.itemView.getContext())
                 .load(fullImageUrl)
                 .placeholder(android.R.drawable.ic_menu_report_image)
                 .error(android.R.drawable.stat_notify_error)
                 .into(holder.emoImageView);
 
-        // 현재 아이템이 선택된 상태인지 확인
-        holder.itemView.setSelected(selectedPositions.contains(position));
+        // 감정 이름 표시 (JELLY-01)
+        holder.tvEmoName.setText(emo.getEmoName());
+
+        // 현재 아이템이 선택된 상태인지 확인 — FrameLayout에 직접 setSelected 적용
+        holder.frameLayout.setSelected(selectedPositions.contains(position));
 
         holder.itemView.setOnClickListener(v -> {
             if (selectedPositions.contains(position)) {
@@ -76,7 +81,7 @@ public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHo
                     notifyItemChanged(position);
                 }
             }
-            
+
             // 리스너를 통해 선택된 데이터 전달
             if (selectionChangedListener != null) {
                 selectionChangedListener.onSelectionChanged(getSelectedEmos());
@@ -101,10 +106,14 @@ public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView emoImageView;
+        TextView tvEmoName;
+        FrameLayout frameLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             emoImageView = itemView.findViewById(R.id.emoImageView);
+            tvEmoName = itemView.findViewById(R.id.tvEmoName);
+            frameLayout = itemView.findViewById(R.id.emoFrameLayout);
         }
     }
 }

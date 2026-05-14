@@ -18,7 +18,7 @@ import retrofit2.Response;
  * @author : Jinhyeok
  * @className : com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.retrofit
  * @description : Jelly Combination Repository
- * @modification : 2025-01-03(Jinhyeok) 수정
+ * @modification : 2026-05-14(Phase2) getJellyCombId 메서드 추가 (Pitfall 1 해결)
  * @date : 2025-01-03
  */
 
@@ -71,5 +71,29 @@ public class JellyCombRepository {
             }
         });
         return jellyIconLiveData;
+    }
+
+    /**
+     * 두 감정 조합으로 jellyCombId를 조회한다 (RESEARCH.md Pitfall 1 해결).
+     * JellySaveReqDTO.jellyCombId 필드를 채우기 위해 TodayJellyActivity에서 사용.
+     */
+    public LiveData<Resource<Long>> getJellyCombId(Long firstEmo, Long secondEmo) {
+        MutableLiveData<Resource<Long>> jellyCombIdLiveData = new MutableLiveData<>();
+        jellyCombService.getJellyCombId(firstEmo, secondEmo).enqueue(new Callback<Long>() {
+            @Override
+            public void onResponse(Call<Long> call, Response<Long> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    jellyCombIdLiveData.postValue(Resource.success(response.body()));
+                } else {
+                    jellyCombIdLiveData.postValue(Resource.error("Error: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Long> call, Throwable t) {
+                jellyCombIdLiveData.postValue(Resource.error("Error: " + t.getMessage()));
+            }
+        });
+        return jellyCombIdLiveData;
     }
 }
