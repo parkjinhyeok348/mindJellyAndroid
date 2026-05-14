@@ -10,4 +10,28 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="jellycombinationimage">jellyCombinationImage</string>
+
+    <!-- Phase 2 신규 문자열 (02-UI-SPEC.md Copywriting Contract) -->
+    <string name="hint_diary_entry">오늘의 감정을 기록해보세요</string>
+    <string name="btn_save_jelly">저장하기</string>
+    <string name="empty_drawer_title">아직 기록이 없어요</string>
+    <string name="empty_drawer_body">오늘의 감정 2개를 선택하고 첫 번째 젤리를 만들어보세요</string>
+    <string name="error_network">네트워크 연결을 확인해주세요</string>
+    <string name="error_server">서버 오류가 발생했어요. 잠시 후 다시 시도해주세요</string>
+    <string name="error_auth">인증이 만료되었어요. 다시 로그인해주세요</string>
+    <string name="error_not_found">요청하신 정보를 찾을 수 없어요</string>
+    <string name="error_generic">오류가 발생했어요. 다시 시도해주세요</string>
+    <string name="error_save_failed">저장에 실패했어요. 다시 시도해주세요</string>
+    <string name="error_diary_empty">일기를 작성해주세요</string>
+    <string name="success_aging_started">숙성을 시작했어요!</string>
+    <string name="error_aging_failed">숙성 시작에 실패했어요. 다시 시도해주세요</string>
+    <string name="success_jelly_saved">젤리가 저장됐어요!</string>
+    <string name="btn_start_aging">숙성시키기</string>
+    <string name="status_waiting">대기중</string>
+    <string name="status_aging">숙성중</string>
+    <string name="status_complete">숙성완료</string>
+    <string name="cd_jelly_preview">합성 젤리 프리뷰 이미지</string>
+    <string name="cd_emotion_icon">감정 아이콘</string>
+    <string name="cd_emo1_icon">첫 번째 감정 아이콘</string>
+    <string name="cd_emo2_icon">두 번째 감정 아이콘</string>
 </resources>
