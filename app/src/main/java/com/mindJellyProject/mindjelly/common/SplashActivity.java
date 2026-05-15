@@ -8,6 +8,7 @@ import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mindJellyProject.mindjelly.BuildConfig;
 import com.mindJellyProject.mindjelly.MainActivity;
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.users.view.LoginActivity;
@@ -33,23 +34,12 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             SessionManager sessionManager = SessionManager.getInstance(SplashActivity.this);
-            boolean isDebugBuild = isDebugBuild();
-            if (isDebugBuild || sessionManager.hasToken()) {
+            if (BuildConfig.DEBUG || sessionManager.hasToken()) {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
             } else {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }
             finish();
         }, 2000); // 1초
-    }
-
-    private boolean isDebugBuild() {
-        try {
-            Class<?> buildConfigClass = Class.forName("com.mindJellyProject.mindjelly.BuildConfig");
-            Object debugValue = buildConfigClass.getField("DEBUG").get(null);
-            return (Boolean) debugValue;
-        } catch (Exception e) {
-            return false;
-        }
     }
 }
