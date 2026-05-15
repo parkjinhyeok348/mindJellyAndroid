@@ -210,7 +210,10 @@ public class TodayJellyActivity extends AppCompatActivity {
         binding.btnNext.setVisibility(View.VISIBLE);
         binding.etDiary.setVisibility(View.GONE);
         binding.btnSave.setVisibility(View.GONE);
-        // combinedJellyImageView는 선택 상태에 따라 onSelectionChangedListener가 관리
+        // Step 2 진입 전 감정 2개가 선택되어 있었으면 프리뷰 복원
+        if (cachedJellyCombId != null) {
+            binding.combinedJellyImageView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showStep2() {
