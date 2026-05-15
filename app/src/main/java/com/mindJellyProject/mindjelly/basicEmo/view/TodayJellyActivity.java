@@ -47,6 +47,8 @@ public class TodayJellyActivity extends AppCompatActivity {
     // jellyCombId 캐싱 (Pitfall 1 해결 — T-02B-02 mitigate)
     private Long cachedJellyCombId = null;
 
+    private boolean isStep2 = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,9 @@ public class TodayJellyActivity extends AppCompatActivity {
             binding.pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
             binding.btnSave.setClickable(!loading);
         });
+
+        // 다음 버튼 — Step 1 → Step 2 전환
+        binding.btnNext.setOnClickListener(v -> showStep2());
 
         // 저장 버튼 클릭 리스너 (Pitfall 2 방지 — observe 중복 등록 없이 버튼 클릭 내부에서 관찰)
         binding.btnSave.setOnClickListener(v -> {
@@ -135,14 +140,14 @@ public class TodayJellyActivity extends AppCompatActivity {
         // 선택 상태 변경 리스너 등록
         adapter.setOnSelectionChangedListener(selectedEmos -> {
             if (selectedEmos.size() == 2) {
-                // 2가지 선택된 경우 조합 이미지 호출
+                binding.btnNext.setEnabled(true);
+                binding.btnNext.setAlpha(1.0f);
+
                 Long id1 = selectedEmos.get(0).getEmoId();
                 Long id2 = selectedEmos.get(1).getEmoId();
 
-                // 합성 아이콘 프리뷰 (D-04/D-06)
                 fetchCombinedJellyIcon(id1, id2);
 
-                // jellyCombId 캐싱 (Pitfall 1 해결)
                 jellyCombViewModel.getJellyCombId(id1, id2).observe(this, resource -> {
                     if (resource != null && resource.isSuccess()) {
                         cachedJellyCombId = resource.getData();
@@ -153,7 +158,9 @@ public class TodayJellyActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                // 2가지 미만일 경우 이미지 숨김 + 캐시 초기화
+                binding.btnNext.setEnabled(false);
+                binding.btnNext.setAlpha(0.5f);
+
                 binding.combinedJellyImageView.setVisibility(View.GONE);
                 binding.combinedJellyImageView.setImageDrawable(null);
                 cachedJellyCombId = null;
@@ -195,5 +202,32 @@ public class TodayJellyActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showStep1() {
+        isStep2 = false;
+        binding.emoRecyclerView.setVisibility(View.VISIBLE);
+        binding.btnNext.setVisibility(View.VISIBLE);
+        binding.etDiary.setVisibility(View.GONE);
+        binding.btnSave.setVisibility(View.GONE);
+        // combinedJellyImageView는 선택 상태에 따라 onSelectionChangedListener가 관리
+    }
+
+    private void showStep2() {
+        isStep2 = true;
+        binding.emoRecyclerView.setVisibility(View.GONE);
+        binding.combinedJellyImageView.setVisibility(View.GONE);
+        binding.btnNext.setVisibility(View.GONE);
+        binding.etDiary.setVisibility(View.VISIBLE);
+        binding.btnSave.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isStep2) {
+            showStep1();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
