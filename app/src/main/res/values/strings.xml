@@ -13,6 +13,7 @@
 
     <!-- Phase 2 신규 문자열 (02-UI-SPEC.md Copywriting Contract) -->
     <string name="hint_diary_entry">오늘의 감정을 기록해보세요</string>
+    <string name="btn_next">다음</string>
     <string name="btn_save_jelly">저장하기</string>
     <string name="empty_drawer_title">아직 기록이 없어요</string>
     <string name="empty_drawer_body">오늘의 감정 2개를 선택하고 첫 번째 젤리를 만들어보세요</string>

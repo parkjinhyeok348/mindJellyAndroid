@@ -210,9 +210,11 @@ public class TodayJellyActivity extends AppCompatActivity {
         binding.btnNext.setVisibility(View.VISIBLE);
         binding.etDiary.setVisibility(View.GONE);
         binding.btnSave.setVisibility(View.GONE);
-        // Step 2 진입 전 감정 2개가 선택되어 있었으면 프리뷰 복원
+        // 감정 2개 선택 상태면 프리뷰 + btnNext 활성화 복원
         if (cachedJellyCombId != null) {
             binding.combinedJellyImageView.setVisibility(View.VISIBLE);
+            binding.btnNext.setEnabled(true);
+            binding.btnNext.setAlpha(1.0f);
         }
     }
 

@@ -85,7 +85,7 @@
         android:backgroundTint="@color/accent_blue"
         android:enabled="false"
         android:alpha="0.5"
-        android:text="다음"
+        android:text="@string/btn_next"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
