@@ -20,7 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 2026-05-12     KTDS            JWT Bearer 토큰 주입 인터셉터 연결
  */
 public class RetrofitClient {
-    private static final String BASE_URL = "http://10.0.2.2:8080/";
     private static RetrofitClient instance;
     private final Retrofit retrofit;
 
@@ -31,7 +30,7 @@ public class RetrofitClient {
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(NetworkConfig.apiBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -54,7 +53,7 @@ public class RetrofitClient {
     @Deprecated
     public static <T> T createService(Class<T> serviceClass) {
         return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(NetworkConfig.apiBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(serviceClass);

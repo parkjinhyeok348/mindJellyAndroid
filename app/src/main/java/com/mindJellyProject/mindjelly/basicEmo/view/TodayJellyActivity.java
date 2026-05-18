@@ -18,6 +18,7 @@ import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.basicEmo.model.BasicEmoResDTO;
 import com.mindJellyProject.mindjelly.basicEmo.viewmodel.BasicEmoViewModel;
 import com.mindJellyProject.mindjelly.common.ErrorMessageUtil;
+import com.mindJellyProject.mindjelly.common.NetworkConfig;
 import com.mindJellyProject.mindjelly.common.SessionManager;
 import com.mindJellyProject.mindjelly.databinding.ActivityTodayJellyBinding;
 import com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.viewmodel.JellyCombViewModel;
@@ -41,8 +42,6 @@ public class TodayJellyActivity extends AppCompatActivity {
     private JellyCombViewModel jellyCombViewModel;
     // 젤리 저장을 위한 뷰모델 (JELLY-04)
     private JellyViewModel jellyViewModel;
-
-    private final String serverUrl = "http://10.0.2.2:8080";
 
     // jellyCombId 캐싱 (Pitfall 1 해결 — T-02B-02 mitigate)
     private Long cachedJellyCombId = null;
@@ -177,7 +176,7 @@ public class TodayJellyActivity extends AppCompatActivity {
                 if (iconPath != null) {
                     binding.combinedJellyImageView.setVisibility(View.VISIBLE);
                     Glide.with(this)
-                            .load(serverUrl + iconPath)
+                            .load(NetworkConfig.assetUrl(iconPath))
                             .into(binding.combinedJellyImageView);
                 }
             } else if (resource != null && resource.isError()) {

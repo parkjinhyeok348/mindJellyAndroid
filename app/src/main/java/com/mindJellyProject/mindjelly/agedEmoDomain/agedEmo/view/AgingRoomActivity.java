@@ -20,6 +20,7 @@ import com.mindJellyProject.mindjelly.common.SessionManager;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.viewmodel.JellyViewModel;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AgingRoomActivity extends AppCompatActivity {
@@ -54,12 +55,12 @@ public class AgingRoomActivity extends AppCompatActivity {
     private void loadJellies() {
         container.removeAllViews();
         if (userId <= 0) {
-            tvStatus.setText("濡쒓렇?????숈꽦諛⑹쓣 ?뺤씤?????덉뒿?덈떎.");
+            tvStatus.setText("로그인 후 에이징룸을 확인할 수 있어요.");
             return;
         }
 
         setLoading(true);
-        tvStatus.setText("?숈꽦諛⑹쓣 遺덈윭?ㅻ뒗 以묒엯?덈떎.");
+        tvStatus.setText("에이징룸을 불러오는 중입니다.");
         jellyViewModel.getJellyList(userId).observe(this, this::renderJellies);
     }
 
@@ -68,33 +69,37 @@ public class AgingRoomActivity extends AppCompatActivity {
         container.removeAllViews();
 
         if (result == null || result.isError()) {
-            tvStatus.setText(result == null ? "?숈꽦諛⑹쓣 遺덈윭?ㅼ? 紐삵뻽?듬땲??" : result.getError());
+            tvStatus.setText(result == null ? "에이징룸을 불러오지 못했어요." : result.getError());
             return;
         }
 
         List<JellyDrawerResDTO> jellies = result.getData();
-        if (jellies == null || jellies.isEmpty()) {
-            tvStatus.setText("?꾩쭅 ?숈꽦???ㅻ━媛 ?놁뒿?덈떎.");
-            addMessageCard("?ㅻ━ ?쒕엻?먯꽌 ?ㅻ━瑜??숈꽦?쒗궎硫??닿납???쒖떆?⑸땲??");
+        List<AgingRoomMapper.DisplayJelly> agingRows = AgingRoomMapper.toAgingRows(jellies, LocalDate.now());
+        if (agingRows.isEmpty()) {
+            tvStatus.setText("아직 숙성 중인 젤리가 없어요.");
+            addMessageCard("젤리 서랍에서 젤리를 숙성시키면 이곳에 표시됩니다.");
+            if (AgingRoomMapper.hasCompletedJellies(jellies)) {
+                addMessageCard("숙성이 끝난 젤리가 있어요. 젤리 뮤지엄에서 확인해보세요.");
+            }
             return;
         }
 
-        tvStatus.setText("?ㅻ━ " + jellies.size() + "媛쒕? ?뺤씤?덉뒿?덈떎.");
-        for (JellyDrawerResDTO jelly : jellies) {
+        tvStatus.setText("숙성 중인 젤리 " + agingRows.size() + "개를 확인했어요.");
+        for (AgingRoomMapper.DisplayJelly jelly : agingRows) {
             addJellyCard(jelly);
+        }
+        if (AgingRoomMapper.hasCompletedJellies(jellies)) {
+            addMessageCard("숙성이 끝난 젤리가 있어요. 젤리 뮤지엄에서 확인해보세요.");
         }
     }
 
-    private void addJellyCard(JellyDrawerResDTO jelly) {
+    private void addJellyCard(AgingRoomMapper.DisplayJelly jelly) {
         LinearLayout card = createCard();
-        String status = jelly.getStatus();
-        if (status == null || status.trim().isEmpty()) {
-            status = Boolean.TRUE.equals(jelly.getAging()) ? "Aging" : "Waiting";
-        }
-        card.addView(createText("?ㅻ━ ID: " + jelly.getJellyId(), 16, true));
-        card.addView(createText("?곹깭: " + status, 14, false));
-        card.addView(createText("?앹꽦?? " + nullToDash(jelly.getCreateDate()), 14, false));
-        card.addView(createText("媛먯젙: " + nullToDash(jelly.getEmo1Name()) + " / " + nullToDash(jelly.getEmo2Name()), 14, false));
+        card.addView(createText(jelly.title, 16, true));
+        card.addView(createText(jelly.dDayText, 18, true));
+        card.addView(createText(jelly.statusText, 14, false));
+        card.addView(createText(jelly.createDateText, 14, false));
+        card.addView(createText(jelly.emotionText, 14, false));
         container.addView(card);
     }
 
@@ -126,10 +131,6 @@ public class AgingRoomActivity extends AppCompatActivity {
             textView.setTypeface(textView.getTypeface(), android.graphics.Typeface.BOLD);
         }
         return textView;
-    }
-
-    private String nullToDash(String value) {
-        return value == null || value.trim().isEmpty() ? "-" : value;
     }
 
     private int dp(int value) {

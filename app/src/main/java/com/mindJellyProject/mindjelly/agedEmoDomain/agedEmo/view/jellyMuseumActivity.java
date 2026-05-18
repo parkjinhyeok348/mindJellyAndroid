@@ -54,12 +54,12 @@ public class jellyMuseumActivity extends AppCompatActivity {
     private void loadMuseum() {
         container.removeAllViews();
         if (userId <= 0) {
-            tvStatus.setText("濡쒓렇?????ㅻ━ 諛뺣Ъ愿???뺤씤?????덉뒿?덈떎.");
+            tvStatus.setText("로그인 후 젤리 뮤지엄을 확인할 수 있어요.");
             return;
         }
 
         setLoading(true);
-        tvStatus.setText("?ㅻ━ 諛뺣Ъ愿??遺덈윭?ㅻ뒗 以묒엯?덈떎.");
+        tvStatus.setText("젤리 뮤지엄을 불러오는 중입니다.");
         agedEmoViewModel.getAgedEmoList(userId).observe(this, this::renderMuseum);
     }
 
@@ -68,28 +68,28 @@ public class jellyMuseumActivity extends AppCompatActivity {
         container.removeAllViews();
 
         if (result == null || result.isError()) {
-            tvStatus.setText(result == null ? "?ㅻ━ 諛뺣Ъ愿??遺덈윭?ㅼ? 紐삵뻽?듬땲??" : result.getError());
+            tvStatus.setText(result == null ? "젤리 뮤지엄을 불러오지 못했어요." : result.getError());
             return;
         }
 
-        List<AgedEmoMuseumResDTO> agedJellies = result.getData();
-        if (agedJellies == null || agedJellies.isEmpty()) {
-            tvStatus.setText("?꾩쭅 ?꾩꽦???ㅻ━媛 ?놁뒿?덈떎.");
-            addMessageCard("?숈꽦???앸궃 ?ㅻ━媛 ?앷린硫?諛뺣Ъ愿???꾩떆?⑸땲??");
+        List<JellyMuseumMapper.DisplayJelly> displayRows = JellyMuseumMapper.toDisplayRows(result.getData());
+        if (displayRows.isEmpty()) {
+            tvStatus.setText("아직 완성된 젤리가 없어요.");
+            addMessageCard("숙성이 끝난 젤리가 생기면 뮤지엄에 전시됩니다.");
             return;
         }
 
-        tvStatus.setText("?꾩떆???ㅻ━ " + agedJellies.size() + "媛쒕? ?뺤씤?덉뒿?덈떎.");
-        for (AgedEmoMuseumResDTO agedJelly : agedJellies) {
+        tvStatus.setText("전시된 젤리 " + displayRows.size() + "개를 확인했어요.");
+        for (JellyMuseumMapper.DisplayJelly agedJelly : displayRows) {
             addMuseumCard(agedJelly);
         }
     }
 
-    private void addMuseumCard(AgedEmoMuseumResDTO agedJelly) {
+    private void addMuseumCard(JellyMuseumMapper.DisplayJelly agedJelly) {
         LinearLayout card = createCard();
-        card.addView(createText("?꾩꽦 ?ㅻ━ ID: " + agedJelly.getAgedEmoId(), 16, true));
-        card.addView(createText("議고빀 ID: " + agedJelly.getJellyCombId(), 14, false));
-        card.addView(createText("?앹꽦?? " + nullToDash(agedJelly.getCreateDate()), 14, false));
+        card.addView(createText(agedJelly.title, 16, true));
+        card.addView(createText(agedJelly.combinationText, 14, false));
+        card.addView(createText(agedJelly.createdText, 14, false));
         container.addView(card);
     }
 
@@ -121,10 +121,6 @@ public class jellyMuseumActivity extends AppCompatActivity {
             textView.setTypeface(textView.getTypeface(), android.graphics.Typeface.BOLD);
         }
         return textView;
-    }
-
-    private String nullToDash(String value) {
-        return value == null || value.trim().isEmpty() ? "-" : value;
     }
 
     private int dp(int value) {

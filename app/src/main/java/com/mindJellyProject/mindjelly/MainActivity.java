@@ -2,16 +2,16 @@ package com.mindJellyProject.mindjelly;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.view.AgingRoomActivity;
+import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.view.jellyMuseumActivity;
 import com.mindJellyProject.mindjelly.basicEmo.view.TodayJellyActivity;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.view.JellyDrawerActivity;
-import com.mindJellyProject.mindjelly.users.view.LoginActivity;
-import com.mindJellyProject.mindjelly.users.view.SignUpActivity;
+import com.mindJellyProject.mindjelly.jellyDomain.jelly.view.JellySelectionBoxActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,25 +39,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnAgingRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnAgingRoom.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, AgingRoomActivity.class)));
 
-            }
-        });
+        btnJellyMuseum.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, jellyMuseumActivity.class)));
 
-        btnJellyMuseum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        btnSelectionBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        btnSelectionBox.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, JellySelectionBoxActivity.class)));
     }
 }

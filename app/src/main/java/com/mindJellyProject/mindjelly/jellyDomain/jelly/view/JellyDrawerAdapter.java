@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
 import com.mindJellyProject.mindjelly.R;
+import com.mindJellyProject.mindjelly.common.NetworkConfig;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 
 import java.util.Objects;
@@ -34,8 +35,6 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
                             && Objects.equals(a.getCreateDate(), b.getCreateDate());
                 }
             };
-
-    private final String serverUrl = "http://10.0.2.2:8080";
 
     public interface OnStartAgingListener {
         void onStartAging(Long jellyId);
@@ -67,14 +66,14 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
 
         // 감정 아이콘 1 Glide 로딩
         Glide.with(holder.itemView.getContext())
-                .load(serverUrl + jelly.getEmo1Icon())
+                .load(NetworkConfig.assetUrl(jelly.getEmo1Icon()))
                 .placeholder(android.R.drawable.ic_menu_report_image)
                 .error(android.R.drawable.stat_notify_error)
                 .into(holder.emo1ImageView);
 
         // 감정 아이콘 2 Glide 로딩
         Glide.with(holder.itemView.getContext())
-                .load(serverUrl + jelly.getEmo2Icon())
+                .load(NetworkConfig.assetUrl(jelly.getEmo2Icon()))
                 .placeholder(android.R.drawable.ic_menu_report_image)
                 .error(android.R.drawable.stat_notify_error)
                 .into(holder.emo2ImageView);

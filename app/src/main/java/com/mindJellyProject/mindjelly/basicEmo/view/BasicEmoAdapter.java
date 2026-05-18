@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.basicEmo.model.BasicEmoResDTO;
+import com.mindJellyProject.mindjelly.common.NetworkConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,6 @@ import java.util.List;
 public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHolder> {
 
     private List<BasicEmoResDTO> emos = new ArrayList<>();
-    private final String serverUrl = "http://10.0.2.2:8080";
-
     // 선택된 포지션들을 관리하는 리스트 (최대 2개)
     private final List<Integer> selectedPositions = new ArrayList<>();
 
@@ -55,7 +54,7 @@ public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BasicEmoResDTO emo = emos.get(position);
 
-        String fullImageUrl = serverUrl + emo.getEmoIcon();
+        String fullImageUrl = NetworkConfig.assetUrl(emo.getEmoIcon());
 
         Glide.with(holder.itemView.getContext())
                 .load(fullImageUrl)
