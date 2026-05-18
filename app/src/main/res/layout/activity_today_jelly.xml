@@ -12,14 +12,55 @@
         android:id="@+id/combinedJellyImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:contentDescription="@string/cd_jelly_preview"
         android:scaleType="fitCenter"
         android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/emoRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@android:drawable/ic_menu_report_image" />
+
+    <TextView
+        android:id="@+id/tvDebugEmo1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="12sp"
+        android:textColor="#888888"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/combinedJellyImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="감정1: 기쁨" />
+
+    <TextView
+        android:id="@+id/tvDebugEmo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:textColor="#888888"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tvDebugEmo1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="감정2: 설렘" />
+
+    <TextView
+        android:id="@+id/tvDebugCombId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:textColor="#888888"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tvDebugEmo2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="CombId: 42" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/emoRecyclerView"
