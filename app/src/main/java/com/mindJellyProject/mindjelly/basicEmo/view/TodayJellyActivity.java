@@ -229,7 +229,9 @@ public class TodayJellyActivity extends AppCompatActivity {
     private void showStep2() {
         isStep2 = true;
         binding.emoRecyclerView.setVisibility(View.GONE);
-        binding.combinedJellyImageView.setVisibility(View.VISIBLE);
+        if (cachedJellyCombId != null) {
+            binding.combinedJellyImageView.setVisibility(View.VISIBLE);
+        }
         binding.btnNext.setVisibility(View.GONE);
         binding.etDiary.setVisibility(View.VISIBLE);
         binding.btnSave.setVisibility(View.VISIBLE);
