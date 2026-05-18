@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.mindJellyProject.mindjelly.BuildConfig;
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.basicEmo.model.BasicEmoResDTO;
 import com.mindJellyProject.mindjelly.basicEmo.viewmodel.BasicEmoViewModel;
@@ -47,6 +48,8 @@ public class TodayJellyActivity extends AppCompatActivity {
     private Long cachedJellyCombId = null;
 
     private boolean isStep2 = false;
+    private String selectedEmo1Name = "";
+    private String selectedEmo2Name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +147,8 @@ public class TodayJellyActivity extends AppCompatActivity {
 
                 Long id1 = selectedEmos.get(0).getEmoId();
                 Long id2 = selectedEmos.get(1).getEmoId();
+                selectedEmo1Name = selectedEmos.get(0).getEmoName();
+                selectedEmo2Name = selectedEmos.get(1).getEmoName();
 
                 fetchCombinedJellyIcon(id1, id2);
 
@@ -163,6 +168,8 @@ public class TodayJellyActivity extends AppCompatActivity {
                 binding.combinedJellyImageView.setVisibility(View.GONE);
                 binding.combinedJellyImageView.setImageDrawable(null);
                 cachedJellyCombId = null;
+                selectedEmo1Name = "";
+                selectedEmo2Name = "";
             }
         });
     }
@@ -209,7 +216,9 @@ public class TodayJellyActivity extends AppCompatActivity {
         binding.btnNext.setVisibility(View.VISIBLE);
         binding.etDiary.setVisibility(View.GONE);
         binding.btnSave.setVisibility(View.GONE);
-        // 감정 2개 선택 상태면 프리뷰 + btnNext 활성화 복원
+        binding.tvDebugEmo1.setVisibility(View.GONE);
+        binding.tvDebugEmo2.setVisibility(View.GONE);
+        binding.tvDebugCombId.setVisibility(View.GONE);
         if (cachedJellyCombId != null) {
             binding.combinedJellyImageView.setVisibility(View.VISIBLE);
             binding.btnNext.setEnabled(true);
@@ -220,10 +229,19 @@ public class TodayJellyActivity extends AppCompatActivity {
     private void showStep2() {
         isStep2 = true;
         binding.emoRecyclerView.setVisibility(View.GONE);
-        binding.combinedJellyImageView.setVisibility(View.GONE);
+        binding.combinedJellyImageView.setVisibility(View.VISIBLE);
         binding.btnNext.setVisibility(View.GONE);
         binding.etDiary.setVisibility(View.VISIBLE);
         binding.btnSave.setVisibility(View.VISIBLE);
+
+        if (BuildConfig.DEBUG) {
+            binding.tvDebugEmo1.setText("감정1: " + selectedEmo1Name);
+            binding.tvDebugEmo2.setText("감정2: " + selectedEmo2Name);
+            binding.tvDebugCombId.setText("CombId: " + cachedJellyCombId);
+            binding.tvDebugEmo1.setVisibility(View.VISIBLE);
+            binding.tvDebugEmo2.setVisibility(View.VISIBLE);
+            binding.tvDebugCombId.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
