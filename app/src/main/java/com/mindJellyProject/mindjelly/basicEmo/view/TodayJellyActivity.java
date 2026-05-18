@@ -234,10 +234,11 @@ public class TodayJellyActivity extends AppCompatActivity {
         binding.etDiary.setVisibility(View.VISIBLE);
         binding.btnSave.setVisibility(View.VISIBLE);
 
+        //noinspection SetTextI18n
         if (BuildConfig.DEBUG) {
             binding.tvDebugEmo1.setText("감정1: " + selectedEmo1Name);
             binding.tvDebugEmo2.setText("감정2: " + selectedEmo2Name);
-            binding.tvDebugCombId.setText("CombId: " + cachedJellyCombId);
+            binding.tvDebugCombId.setText("CombId: " + (cachedJellyCombId != null ? cachedJellyCombId : "(loading...)"));
             binding.tvDebugEmo1.setVisibility(View.VISIBLE);
             binding.tvDebugEmo2.setVisibility(View.VISIBLE);
             binding.tvDebugCombId.setVisibility(View.VISIBLE);
