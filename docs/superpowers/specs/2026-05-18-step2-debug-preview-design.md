@@ -80,4 +80,4 @@ btnNext 클릭 → showStep2()
 - 이 변경은 `TodayJellyActivity`와 `activity_today_jelly.xml`만 수정한다.
 - 프로덕션 빌드(`BuildConfig.DEBUG == false`)에서는 디버그 텍스트뷰가 보이지 않는다.
 - 조합 이미지는 Step 2에서도 항상 보인다 (DEBUG/프로덕션 모두).
-- `BasicEmoResDTO`의 이름 필드를 사용한다 — 다른 모델 변경 없음.
+- `BasicEmoResDTO.getEmoName()`으로 감정 이름을 읽는다 — 다른 모델 변경 없음.
