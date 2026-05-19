@@ -25,16 +25,55 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
             new DiffUtil.ItemCallback<JellyDrawerResDTO>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull JellyDrawerResDTO a, @NonNull JellyDrawerResDTO b) {
-                    return a.getJellyId().equals(b.getJellyId());
+                    return sameItem(a, b);
                 }
 
                 @Override
                 public boolean areContentsTheSame(@NonNull JellyDrawerResDTO a, @NonNull JellyDrawerResDTO b) {
-                    return a.getJellyId().equals(b.getJellyId())
-                            && Objects.equals(a.getStatus(), b.getStatus())
-                            && Objects.equals(a.getCreateDate(), b.getCreateDate());
+                    return sameContent(a, b);
                 }
             };
+
+    static boolean sameItem(JellyDrawerResDTO a, JellyDrawerResDTO b) {
+        return a != null
+                && b != null
+                && a.getJellyId() != null
+                && b.getJellyId() != null
+                && a.getJellyId().equals(b.getJellyId());
+    }
+
+    static boolean sameContent(JellyDrawerResDTO a, JellyDrawerResDTO b) {
+        return a != null
+                && b != null
+                && Objects.equals(a.getJellyId(), b.getJellyId())
+                && Objects.equals(a.getStatus(), b.getStatus())
+                && Objects.equals(a.getCreateDate(), b.getCreateDate())
+                && Objects.equals(a.getEmo1Name(), b.getEmo1Name())
+                && Objects.equals(a.getEmo1Icon(), b.getEmo1Icon())
+                && Objects.equals(a.getEmo2Name(), b.getEmo2Name())
+                && Objects.equals(a.getEmo2Icon(), b.getEmo2Icon());
+    }
+
+    static String emotionNamesText(JellyDrawerResDTO jelly) {
+        if (jelly == null) {
+            return "";
+        }
+
+        String emo1Name = clean(jelly.getEmo1Name());
+        String emo2Name = clean(jelly.getEmo2Name());
+
+        if (emo1Name.isEmpty()) {
+            return emo2Name;
+        }
+        if (emo2Name.isEmpty()) {
+            return emo1Name;
+        }
+        return emo1Name + " + " + emo2Name;
+    }
+
+    private static String clean(String value) {
+        return value == null ? "" : value.trim();
+    }
 
     public interface OnStartAgingListener {
         void onStartAging(Long jellyId);
@@ -63,6 +102,7 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
 
         // 날짜 표시
         holder.tvCreateDate.setText(jelly.getCreateDate());
+        holder.tvEmotionNames.setText(emotionNamesText(jelly));
 
         // 감정 아이콘 1 Glide 로딩
         Glide.with(holder.itemView.getContext())
@@ -124,7 +164,7 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
 
     static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
         ImageView emo1ImageView, emo2ImageView;
-        TextView tvCreateDate, tvAgingStatus;
+        TextView tvCreateDate, tvEmotionNames, tvAgingStatus;
         Button btnStartAging;
 
         public ViewHolder(@NonNull View itemView) {
@@ -132,6 +172,7 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
             emo1ImageView = itemView.findViewById(R.id.emo1ImageView);
             emo2ImageView = itemView.findViewById(R.id.emo2ImageView);
             tvCreateDate = itemView.findViewById(R.id.tvCreateDate);
+            tvEmotionNames = itemView.findViewById(R.id.tvEmotionNames);
             tvAgingStatus = itemView.findViewById(R.id.tvAgingStatus);
             btnStartAging = itemView.findViewById(R.id.btnStartAging);
         }

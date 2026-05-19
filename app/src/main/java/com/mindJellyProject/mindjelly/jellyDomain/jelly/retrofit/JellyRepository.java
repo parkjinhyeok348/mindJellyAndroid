@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.mindJellyProject.mindjelly.common.RepositoryError;
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.common.RetrofitClient;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.Jelly;
@@ -51,7 +52,7 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<Jelly> call, Throwable t) {
-                liveData.postValue(Resource.error(t.getMessage()));
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
             }
         });
         return liveData;
@@ -72,7 +73,7 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<JellyUpdateResDTO> call, Throwable t) {
-                liveData.postValue(Resource.error(t.getMessage()));
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
             }
         });
         return liveData;
@@ -93,7 +94,7 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<Jelly> call, Throwable t) {
-                liveData.postValue(Resource.error(t.getMessage()));
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
             }
         });
         return liveData;
@@ -114,7 +115,7 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<JellyResDTO> call, Throwable t) {
-                liveData.postValue(Resource.error(t.getMessage()));
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
             }
         });
         return liveData;
@@ -135,7 +136,7 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<List<JellyDrawerResDTO>> call, Throwable t) {
-                liveData.postValue(Resource.error(t.getMessage()));
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
             }
         });
         return liveData;
@@ -156,7 +157,7 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                liveData.postValue(Resource.error(t.getMessage()));
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
             }
         });
         return liveData;

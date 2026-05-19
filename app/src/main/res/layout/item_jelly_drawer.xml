@@ -46,6 +46,14 @@
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
+        <TextView
+            android:id="@+id/tvEmotionNames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp" />
+
     </LinearLayout>
 
     <!-- 상태 배지 + 숙성 버튼 -->

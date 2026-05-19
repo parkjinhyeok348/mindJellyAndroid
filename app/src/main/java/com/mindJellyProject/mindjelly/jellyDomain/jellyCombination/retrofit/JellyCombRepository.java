@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.mindJellyProject.mindjelly.common.RepositoryError;
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.common.RetrofitClient;
 import com.mindJellyProject.mindjelly.jellyDomain.jellyCombination.model.JellyCombResDTO;
@@ -45,7 +46,7 @@ public class JellyCombRepository {
 
             @Override
             public void onFailure(Call<JellyCombResDTO> call, Throwable t) {
-                jellyCombLiveData.postValue(Resource.error("Error: " + t.getMessage()));
+                jellyCombLiveData.postValue(Resource.error(RepositoryError.prefixedMessage(t)));
             }
         });
         return jellyCombLiveData;
@@ -67,7 +68,7 @@ public class JellyCombRepository {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                jellyIconLiveData.postValue(Resource.error("Error: " + t.getMessage()));
+                jellyIconLiveData.postValue(Resource.error(RepositoryError.prefixedMessage(t)));
             }
         });
         return jellyIconLiveData;
@@ -91,7 +92,7 @@ public class JellyCombRepository {
 
             @Override
             public void onFailure(Call<Long> call, Throwable t) {
-                jellyCombIdLiveData.postValue(Resource.error("Error: " + t.getMessage()));
+                jellyCombIdLiveData.postValue(Resource.error(RepositoryError.prefixedMessage(t)));
             }
         });
         return jellyCombIdLiveData;

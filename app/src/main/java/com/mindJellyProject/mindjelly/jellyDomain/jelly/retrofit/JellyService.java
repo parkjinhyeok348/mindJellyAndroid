@@ -30,7 +30,7 @@ import retrofit2.http.Path;
  * 수정일        수정자        수정내용
  * -----------------------------------------
  * 2025-01-03     Jinhyeok        주석 생성
- * 2026-05-14     Phase2          @PATCH("/api/jelly/{jellyId}") startAging 추가
+ * 2026-05-14     Phase2          @PATCH("/jelly/{jellyId}") startAging 추가
  */
 public interface JellyService {
 
@@ -50,10 +50,10 @@ public interface JellyService {
     Call<List<JellyDrawerResDTO>> getJellyList(@Path("userId") Long userId);
 
     /**
-     * 숙성 시작 API — PATCH /api/jelly/{jellyId}
+     * 숙성 시작 API — PATCH /jelly/{jellyId}
      * Body: { "status": "AGING" }
      * 응답 형태 무관, isSuccessful() 체크만 사용 (D-03)
      */
-    @PATCH("/api/jelly/{jellyId}")
+    @PATCH("/jelly/{jellyId}")
     Call<ResponseBody> startAging(@Path("jellyId") Long jellyId, @Body JellyStartAgingReqDTO reqDTO);
 }
