@@ -75,7 +75,19 @@ public class SessionManager {
             String payload = tokenParts[1];
             byte[] decoded = Base64.decode(payload, Base64.URL_SAFE | Base64.NO_PADDING | Base64.NO_WRAP);
             JSONObject payloadJson = new JSONObject(new String(decoded, StandardCharsets.UTF_8));
-            long userId = payloadJson.getLong("userId");
+            Log.d(TAG, "JWT payload keys: " + payloadJson.toString());
+
+            long userId = -1;
+            if (payloadJson.has("userId")) {
+                userId = payloadJson.getLong("userId");
+            } else if (payloadJson.has("sub")) {
+                userId = Long.parseLong(payloadJson.getString("sub"));
+            } else if (payloadJson.has("id")) {
+                userId = payloadJson.getLong("id");
+            } else {
+                Log.e(TAG, "알 수 없는 JWT 구조, 사용 가능한 키: " + payloadJson.toString());
+                return;
+            }
 
             encryptedPrefs.edit()
                     .putLong(KEY_USER_ID, userId)

@@ -6,6 +6,7 @@ import com.mindJellyProject.mindjelly.users.model.UserSaveReqDTO;
 import com.mindJellyProject.mindjelly.users.model.UserUpdateReqDTO;
 import com.mindJellyProject.mindjelly.users.model.Users;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -47,7 +48,7 @@ public interface UserService {
     Call<String> findPassword(@Body FindPasswordReqDTO reqDTO);
 
     @POST("/users/login")
-    Call<String> login(@Body UserLoginReqDTO reqDTO);
+    Call<ResponseBody> login(@Body UserLoginReqDTO reqDTO);
 
     @DELETE("/users/{userId}")
     Call<Void> deleteUser(@Path("userId") Long userId);

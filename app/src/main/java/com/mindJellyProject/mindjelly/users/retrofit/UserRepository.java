@@ -207,18 +207,23 @@ public class UserRepository {
     // 로그인
     public LiveData<Resource<String>> login(UserLoginReqDTO reqDTO) {
         MutableLiveData<Resource<String>> resultLiveData = new MutableLiveData<>();
-        userService.login(reqDTO).enqueue(new Callback<String>() {
+        userService.login(reqDTO).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    resultLiveData.postValue(Resource.success(response.body()));
+                    try {
+                        String token = response.body().string();
+                        resultLiveData.postValue(Resource.success(token));
+                    } catch (IOException e) {
+                        resultLiveData.postValue(Resource.error("토큰 파싱 실패: " + e.getMessage()));
+                    }
                 } else {
                     resultLiveData.postValue(Resource.error(getLoginErrorMessage(response)));
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 resultLiveData.postValue(Resource.error("Error: " + t.getMessage()));
             }
         });
