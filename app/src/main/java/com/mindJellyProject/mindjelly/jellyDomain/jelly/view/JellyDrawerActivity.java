@@ -12,10 +12,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.mindJellyProject.mindjelly.R;
-import com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.view.AgingRoomActivity;
 import com.mindJellyProject.mindjelly.common.ErrorMessageUtil;
 import com.mindJellyProject.mindjelly.common.SessionManager;
 import com.mindJellyProject.mindjelly.databinding.ActivityJellyDrawerBinding;
@@ -62,7 +61,7 @@ public class JellyDrawerActivity extends AppCompatActivity {
         });
 
         // RecyclerView 초기화
-        binding.rvJellyList.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvJellyList.setLayoutManager(new GridLayoutManager(this, 3));
         adapter = new JellyDrawerAdapter();
         binding.rvJellyList.setAdapter(adapter);
 
@@ -74,17 +73,11 @@ public class JellyDrawerActivity extends AppCompatActivity {
             binding.pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
         });
 
-        // startAging 콜백 연결 (DRAW-03)
-        adapter.setOnStartAgingListener(jellyId -> {
-            jellyViewModel.startAging(jellyId).observe(this, resource -> {
-                jellyViewModel.isLoading.postValue(false);
-                if (resource != null && resource.isSuccess()) {
-                    Toast.makeText(this, getString(R.string.success_aging_started), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(JellyDrawerActivity.this, AgingRoomActivity.class));
-                } else if (resource != null && resource.isError()) {
-                    Toast.makeText(this, ErrorMessageUtil.getKoreanMessage(resource, this), Toast.LENGTH_SHORT).show();
-                }
-            });
+        // 아이템 클릭 → 상세 화면 이동
+        adapter.setOnItemClickListener(jellyId -> {
+            Intent intent = new Intent(JellyDrawerActivity.this, JellyDetailActivity.class);
+            intent.putExtra("jellyId", jellyId);
+            startActivity(intent);
         });
 
         // userId 검증 (T-02D-01)
