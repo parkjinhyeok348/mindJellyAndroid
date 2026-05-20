@@ -31,13 +31,13 @@
     {
       "stage": "verify",
       "label": "검증",
-      "status": "pending",
-      "timestamp": null,
-      "commit": null,
-      "artifact": null,
-      "summary": null
+      "status": "approved",
+      "timestamp": "2026-05-20T07:06:56.362Z",
+      "commit": "2c70fbc",
+      "artifact": "verification-20260520T155800.md",
+      "summary": "모든 요구사항 충족"
     }
   ],
-  "currentStage": "verify",
+  "currentStage": "complete",
   "securityGates": []
 }
