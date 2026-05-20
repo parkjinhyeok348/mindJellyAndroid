@@ -2,89 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical">
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center_horizontal">
 
-    <!-- 감정 아이콘 쌍 -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/emo1ImageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/cd_emo1_icon" />
 
         <ImageView
             android:id="@+id/emo2ImageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="4dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/cd_emo2_icon" />
 
     </LinearLayout>
 
-    <!-- 날짜 텍스트 -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="12dp">
-
-        <TextView
-            android:id="@+id/tvCreateDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary" />
-
-        <TextView
-            android:id="@+id/tvEmotionNames"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/text_hint"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
-    <!-- 상태 배지 + 숙성 버튼 -->
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvCreateDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tvAgingStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:background="@drawable/bg_status_badge" />
-
-        <Button
-            android:id="@+id/btnStartAging"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/btn_start_aging"
-            android:textSize="12sp"
-            android:backgroundTint="@color/accent_blue"
-            android:textColor="@color/white"
-            android:visibility="gone"
-            android:minHeight="36dp"
-            android:paddingHorizontal="8dp" />
-
-    </LinearLayout>
+        android:layout_marginTop="4dp"
+        android:textSize="11sp"
+        android:textColor="@color/text_primary" />
 
 </LinearLayout>
