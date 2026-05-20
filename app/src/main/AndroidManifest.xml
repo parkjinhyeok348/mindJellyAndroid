@@ -41,6 +41,9 @@
             android:name=".jellyDomain.jelly.view.JellyDrawerActivity"
             android:exported="false" />
         <activity
+            android:name=".jellyDomain.jelly.view.JellyDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".basicEmo.view.TodayJellyActivity"
             android:exported="false" />
         <activity
