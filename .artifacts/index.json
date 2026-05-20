@@ -1,0 +1,43 @@
+{
+  "project": "mindJelly",
+  "stages": [
+    {
+      "stage": "brainstorm",
+      "label": "요구사항 분석",
+      "status": "approved",
+      "timestamp": "2026-05-20T06:37:36.151Z",
+      "commit": "3478884",
+      "artifact": "requirements-20260520T153154.md",
+      "summary": "젤리서랍 3열 그리드 재구현 + 상세 페이지 신규 추가"
+    },
+    {
+      "stage": "plan",
+      "label": "계획",
+      "status": "pending",
+      "timestamp": null,
+      "commit": null,
+      "artifact": null,
+      "summary": null
+    },
+    {
+      "stage": "exec",
+      "label": "구현",
+      "status": "pending",
+      "timestamp": null,
+      "commit": null,
+      "artifact": null,
+      "summary": null
+    },
+    {
+      "stage": "verify",
+      "label": "검증",
+      "status": "pending",
+      "timestamp": null,
+      "commit": null,
+      "artifact": null,
+      "summary": null
+    }
+  ],
+  "currentStage": "plan",
+  "securityGates": []
+}
