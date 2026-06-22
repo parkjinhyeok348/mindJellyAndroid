@@ -80,6 +80,35 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
         });
     }
 
+    static boolean sameItem(JellyDrawerResDTO left, JellyDrawerResDTO right) {
+        if (left == null || right == null) return false;
+        if (left.getJellyId() == null || right.getJellyId() == null) return false;
+        return left.getJellyId().equals(right.getJellyId());
+    }
+
+    static boolean sameContent(JellyDrawerResDTO left, JellyDrawerResDTO right) {
+        if (left == null || right == null) return false;
+        return Objects.equals(left.getJellyId(), right.getJellyId())
+                && Objects.equals(left.getStatus(), right.getStatus())
+                && Objects.equals(left.getCreateDate(), right.getCreateDate())
+                && Objects.equals(left.getEmo1Name(), right.getEmo1Name())
+                && Objects.equals(left.getEmo1Icon(), right.getEmo1Icon())
+                && Objects.equals(left.getEmo2Name(), right.getEmo2Name())
+                && Objects.equals(left.getEmo2Icon(), right.getEmo2Icon());
+    }
+
+    static String emotionNamesText(JellyDrawerResDTO dto) {
+        StringBuilder sb = new StringBuilder();
+        if (dto.getEmo1Name() != null && !dto.getEmo1Name().isEmpty()) {
+            sb.append(dto.getEmo1Name());
+        }
+        if (dto.getEmo2Name() != null && !dto.getEmo2Name().isEmpty()) {
+            if (sb.length() > 0) sb.append(" + ");
+            sb.append(dto.getEmo2Name());
+        }
+        return sb.toString();
+    }
+
     static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
         ImageView emo1ImageView, emo2ImageView;
         TextView tvCreateDate;
