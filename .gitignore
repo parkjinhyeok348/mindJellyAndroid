@@ -154,3 +154,20 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,java
+
+### Local & AI tooling settings ###
+# Claude Code / OMC / AI agent tooling — not part of the app
+.claude/
+.omc/
+.agents/
+.artifacts/
+.planning/
+docs/ai-work/
+docs/superpowers/
+hooks/
+scripts/
+CLAUDE.md
+AGENTS.md
+
+# IDE deployment target (per-machine emulator/device selection)
+.idea/deploymentTargetSelector.xml
