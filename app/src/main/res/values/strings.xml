@@ -35,4 +35,18 @@
     <string name="cd_emotion_icon">감정 아이콘</string>
     <string name="cd_emo1_icon">첫 번째 감정 아이콘</string>
     <string name="cd_emo2_icon">두 번째 감정 아이콘</string>
+
+    <!-- 홈화면 말풍선 격려 문구 -->
+    <string-array name="home_speech_messages">
+        <item>오늘 마음은 어때요?</item>
+        <item>젤리처럼 달콤한 하루 보내세요</item>
+        <item>오늘도 감정을 기록해봐요</item>
+        <item>숙성 중인 젤리가 기다리고 있어요</item>
+        <item>매일 조금씩, 마음이 자라고 있어요</item>
+        <item>오늘의 감정은 무슨 색인가요?</item>
+        <item>기록하면 마음이 가벼워져요</item>
+        <item>젤리 뮤지엄이 당신을 기다려요</item>
+        <item>감정도 쉬어가야 해요</item>
+        <item>오늘 하루도 수고했어요</item>
+    </string-array>
 </resources>

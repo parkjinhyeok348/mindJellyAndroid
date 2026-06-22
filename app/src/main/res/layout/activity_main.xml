@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -11,18 +12,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- 배경: 캐릭터 이미지 전체 화면 -->
         <ImageView
             android:id="@+id/background_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/home_screen" />
+            android:src="@drawable/home_screen"
+            android:contentDescription="@string/app_name" />
 
+        <!-- 말풍선 오버레이 (캐릭터 머리 위 영역) -->
+        <TextView
+            android:id="@+id/tvSpeechBubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/bg_speech_bubble"
+            android:maxWidth="260dp"
+            android:textColor="#333333"
+            android:textSize="13sp"
+            tools:text="오늘 마음은 어때요?" />
+
+        <!-- 4개 버튼 2×2 그리드 (btnSelectionBox 위에 위치) -->
         <GridLayout
             android:id="@+id/mainGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/btnSelectionBox"
+            android:layout_marginBottom="8dp"
             android:columnCount="2"
             android:rowCount="2"
             android:alignmentMode="alignMargins"
@@ -38,7 +56,7 @@
                 android:text="오늘의\n마음젤리"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:padding="8dp"/>
+                android:padding="8dp" />
 
             <Button
                 android:id="@+id/btnJellyDrawer"
@@ -50,7 +68,7 @@
                 android:text="젤리 서랍"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:padding="8dp"/>
+                android:padding="8dp" />
 
             <Button
                 android:id="@+id/btnAgingRoom"
@@ -62,7 +80,7 @@
                 android:text="에이징룸"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:padding="8dp"/>
+                android:padding="8dp" />
 
             <Button
                 android:id="@+id/btnJellyMuseum"
@@ -74,22 +92,43 @@
                 android:text="젤리 뮤지엄"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:padding="8dp"/>
+                android:padding="8dp" />
 
         </GridLayout>
 
-        <Button
-            android:id="@+id/btnSelectionBox"
+        <!-- 젤리셀렉션박스 — 다른 버튼과 동일 크기, 중앙 정렬 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:backgroundTint="#A3D7FF"
-            android:text="젤리 셀렉션 박스"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+            <Button
+                android:id="@+id/btnSelectionBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="#A3D7FF"
+                android:text="젤리 셀렉션 박스"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:padding="8dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
