@@ -19,6 +19,7 @@ lifecycleViewmodelKtx = "2.6.1"
 securityCrypto = "1.1.0-alpha06"
 springCloudAwsStarter = "3.1.1"
 glide = "4.15.1"
+workManager = "2.9.0"
 
 [libraries]
 aws-java-sdk-s3 = { module = "com.amazonaws:aws-java-sdk-s3", version.ref = "awsJavaSdkS3" }
@@ -42,6 +43,7 @@ security-crypto = { group = "androidx.security", name = "security-crypto", versi
 spring-cloud-aws-starter = { module = "io.awspring.cloud:spring-cloud-aws-starter", version.ref = "springCloudAwsStarter" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+work-runtime = { group = "androidx.work", name = "work-runtime", version.ref = "workManager" }
 
 
 [plugins]
