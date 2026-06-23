@@ -1,8 +1,10 @@
 package com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,6 +49,10 @@ public class AgingRoomActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_aging);
         container = findViewById(R.id.container_aging_jellies);
         Button btnRefresh = findViewById(R.id.btn_refresh_aging);
+
+        ImageButton btnNotification = findViewById(R.id.btn_aging_notification);
+        btnNotification.setOnClickListener(v ->
+                startActivity(new Intent(this, AgingCompletedListActivity.class)));
 
         btnRefresh.setOnClickListener(v -> loadJellies());
         loadJellies();
