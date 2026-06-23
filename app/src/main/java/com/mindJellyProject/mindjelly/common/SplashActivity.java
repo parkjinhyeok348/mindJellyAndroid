@@ -12,6 +12,8 @@ import com.mindJellyProject.mindjelly.BuildConfig;
 import com.mindJellyProject.mindjelly.MainActivity;
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.users.view.LoginActivity;
+import com.mindJellyProject.mindjelly.common.AgingCheckWorker;
+import com.mindJellyProject.mindjelly.common.WorkManagerScheduler;
 
 /**
  * @author : Jinhyeok
@@ -31,6 +33,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        createNotificationChannel();
+        WorkManagerScheduler.scheduleOnce(this);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             SessionManager sessionManager = SessionManager.getInstance(SplashActivity.this);
@@ -41,5 +45,14 @@ public class SplashActivity extends AppCompatActivity {
             }
             finish();
         }, 2000); // 1초
+    }
+
+    private void createNotificationChannel() {
+        android.app.NotificationChannel channel = new android.app.NotificationChannel(
+                AgingCheckWorker.CHANNEL_ID,
+                "숙성 완료 알림",
+                android.app.NotificationManager.IMPORTANCE_DEFAULT);
+        getSystemService(android.app.NotificationManager.class)
+                .createNotificationChannel(channel);
     }
 }
