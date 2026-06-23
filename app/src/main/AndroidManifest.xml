@@ -35,6 +35,9 @@
             android:name=".agedEmoDomain.agedEmo.view.AgingRoomActivity"
             android:exported="false" />
         <activity
+            android:name=".agedEmoDomain.agedEmo.view.AgingCompleteActivity"
+            android:exported="false" />
+        <activity
             android:name=".jellyDomain.jelly.view.JellySelectionBoxActivity"
             android:exported="false" />
         <activity
