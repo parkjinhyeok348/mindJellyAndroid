@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -48,6 +49,7 @@ public class TodayJellyActivity extends AppCompatActivity {
     private Long cachedJellyCombId = null;
 
     private boolean isStep2 = false;
+    private boolean checkingDuplicate = false;
     private String selectedEmo1Name = "";
     private String selectedEmo2Name = "";
 
@@ -70,18 +72,26 @@ public class TodayJellyActivity extends AppCompatActivity {
         // 젤리 저장 뷰모델 초기화
         jellyViewModel = new ViewModelProvider(this).get(JellyViewModel.class);
 
+        // 중복 체크 완료 전까지 RecyclerView 숨김
+        binding.emoRecyclerView.setVisibility(View.INVISIBLE);
+        binding.pbLoading.setVisibility(View.VISIBLE);
+
         setupRecyclerView();
 
         viewModel = new ViewModelProvider(this).get(BasicEmoViewModel.class);
         loadBasicEmos();
+        checkingDuplicate = true;
+        checkDuplicateAndProceed();
 
         // 초기에는 조합된 이미지 가리기
         binding.combinedJellyImageView.setVisibility(View.GONE);
 
         // isLoading observe — pbLoading 표시 및 btnSave 비활성화 (QUAL-01)
         jellyViewModel.isLoading.observe(this, loading -> {
-            binding.pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
-            binding.btnSave.setClickable(!loading);
+            if (!checkingDuplicate) {
+                binding.pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+                binding.btnSave.setClickable(!loading);
+            }
         });
 
         // 다음 버튼 — Step 1 → Step 2 전환
@@ -208,6 +218,38 @@ public class TodayJellyActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void checkDuplicateAndProceed() {
+        long userId = SessionManager.getInstance(this).getUserId();
+        if (userId == -1L) {
+            checkingDuplicate = false;
+            binding.pbLoading.setVisibility(View.GONE);
+            binding.emoRecyclerView.setVisibility(View.VISIBLE);
+            return;
+        }
+        jellyViewModel.hasTodayJelly(userId).observe(this, resource -> {
+            checkingDuplicate = false;
+            binding.pbLoading.setVisibility(View.GONE);
+            if (resource != null && resource.isSuccess() && Boolean.TRUE.equals(resource.getData())) {
+                showDuplicateDialog();
+            } else {
+                binding.emoRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void showDuplicateDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_today_jelly_title)
+                .setMessage(R.string.dialog_today_jelly_message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.dialog_today_jelly_positive, (d, w) -> {
+                    startActivity(new Intent(this, JellyDrawerActivity.class));
+                    finish();
+                })
+                .setNegativeButton(R.string.dialog_today_jelly_negative, (d, w) -> finish())
+                .show();
     }
 
     private void showStep1() {
