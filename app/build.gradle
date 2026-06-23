@@ -33,6 +33,15 @@ android {
         viewBinding true
         buildConfig true
     }
+    testOptions {
+        unitTests.all {
+            // Strip quoted PATH entries (e.g. "C:\Program Files\Java\jdk-21\bin;")
+            // that cause Windows command-line parsing to break the test JVM launch.
+            String rawPath = System.getenv('PATH') ?: ''
+            String cleanPath = rawPath.split(';').findAll { !it.trim().startsWith('"') }.join(';')
+            environment 'PATH', cleanPath
+        }
+    }
 }
 
 dependencies {
