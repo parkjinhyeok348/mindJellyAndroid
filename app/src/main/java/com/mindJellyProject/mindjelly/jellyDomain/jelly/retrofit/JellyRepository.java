@@ -167,7 +167,7 @@ public class JellyRepository {
         return liveData;
     }
 
-    // 오늘 젤리 존재 여부 확인
+    // 오늘 젤리 존재 여부 확인 — GET /jelly/user/{userId} 재활용, 클라이언트에서 날짜 필터링
     public LiveData<Resource<Boolean>> hasTodayJelly(Long userId) {
         MutableLiveData<Resource<Boolean>> liveData = new MutableLiveData<>();
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());

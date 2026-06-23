@@ -82,7 +82,8 @@ public class JellyViewModel extends AndroidViewModel {
         return repository.startAging(jellyId, new JellyStartAgingReqDTO());
     }
 
-    public LiveData<Resource<Boolean>> hasTodayJelly(long userId) {
+    // isLoading 관리 불필요 — Activity가 pbLoading을 직접 제어함
+    public LiveData<Resource<Boolean>> hasTodayJelly(Long userId) {
         return repository.hasTodayJelly(userId);
     }
 }
