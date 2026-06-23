@@ -36,6 +36,12 @@
     <string name="cd_emo1_icon">첫 번째 감정 아이콘</string>
     <string name="cd_emo2_icon">두 번째 감정 아이콘</string>
 
+    <!-- 오늘의 젤리 중복 가드 다이얼로그 -->
+    <string name="dialog_today_jelly_title">오늘의 젤리</string>
+    <string name="dialog_today_jelly_message">오늘은 이미 젤리를 기록했어요.\n서랍에서 확인해볼까요?</string>
+    <string name="dialog_today_jelly_positive">서랍 보기</string>
+    <string name="dialog_today_jelly_negative">닫기</string>
+
     <!-- 홈화면 말풍선 격려 문구 -->
     <string-array name="home_speech_messages">
         <item>오늘 마음은 어때요?</item>
