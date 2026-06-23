@@ -81,4 +81,8 @@ public class JellyViewModel extends AndroidViewModel {
         isLoading.postValue(true);
         return repository.startAging(jellyId, new JellyStartAgingReqDTO());
     }
+
+    public LiveData<Resource<Boolean>> hasTodayJelly(long userId) {
+        return repository.hasTodayJelly(userId);
+    }
 }

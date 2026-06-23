@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.mindJellyProject.mindjelly.common.RepositoryError;
 import com.mindJellyProject.mindjelly.common.Resource;
 import com.mindJellyProject.mindjelly.common.RetrofitClient;
+import com.mindJellyProject.mindjelly.common.TodayJellyFilter;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.Jelly;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyResDTO;
@@ -16,7 +17,10 @@ import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyStartAgingReq
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyUpdateReqDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyUpdateResDTO;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -157,6 +161,28 @@ public class JellyRepository {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
+            }
+        });
+        return liveData;
+    }
+
+    // 오늘 젤리 존재 여부 확인
+    public LiveData<Resource<Boolean>> hasTodayJelly(Long userId) {
+        MutableLiveData<Resource<Boolean>> liveData = new MutableLiveData<>();
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        jellyService.getJellyList(userId).enqueue(new Callback<List<JellyDrawerResDTO>>() {
+            @Override
+            public void onResponse(Call<List<JellyDrawerResDTO>> call, Response<List<JellyDrawerResDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    liveData.postValue(Resource.success(TodayJellyFilter.containsToday(response.body(), today)));
+                } else {
+                    liveData.postValue(Resource.error("Error: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<JellyDrawerResDTO>> call, Throwable t) {
                 liveData.postValue(Resource.error(RepositoryError.message(t)));
             }
         });
