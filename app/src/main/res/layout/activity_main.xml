@@ -20,12 +20,13 @@
         <!-- 말풍선 오버레이 (캐릭터 머리 위 영역) -->
         <TextView
             android:id="@+id/tvSpeechBubble"
-            android:layout_width="wrap_content"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/bg_speech_bubble"
-            android:maxWidth="260dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="164dp"
+            android:layout_marginTop="102dp"
+            android:gravity="center"
             android:textColor="#333333"
             android:textSize="13sp"
             tools:text="오늘 마음은 어때요?" />
