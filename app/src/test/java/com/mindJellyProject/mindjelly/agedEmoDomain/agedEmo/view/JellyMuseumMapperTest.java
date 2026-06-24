@@ -14,5 +14,6 @@ public class JellyMuseumMapperTest {
     public void formatsCreatedDateNullToDash() {
         assertEquals("2026-05-18", JellyMuseumMapper.formatCreatedDate("2026-05-18"));
         assertEquals("-", JellyMuseumMapper.formatCreatedDate(null));
+        assertEquals("-", JellyMuseumMapper.formatCreatedDate(""));
     }
 }

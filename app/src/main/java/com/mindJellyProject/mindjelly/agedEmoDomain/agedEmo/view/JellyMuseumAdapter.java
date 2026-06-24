@@ -100,6 +100,9 @@ public class JellyMuseumAdapter extends RecyclerView.Adapter<JellyMuseumAdapter.
                 @Override
                 public void onResponse(Call<List<AgedEmoImageResDTO>> call,
                                        Response<List<AgedEmoImageResDTO>> response) {
+                    if (call.isCanceled()) {
+                        return;
+                    }
                     if (!response.isSuccessful() || response.body() == null || response.body().isEmpty()) {
                         return;
                     }
