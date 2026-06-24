@@ -43,6 +43,10 @@
     <string name="dialog_today_jelly_negative">닫기</string>
 
     <!-- 설정 화면 (SettingActivity) -->
+    <string name="setting_title">설정</string>
+    <string name="setting_btn_manage_profile">프로필 관리</string>
+    <string name="setting_btn_logout">로그아웃</string>
+    <string name="setting_btn_delete_account">회원 탈퇴</string>
     <string name="setting_status_logged_in">로그인됨: 사용자 ID %1$d</string>
     <string name="setting_status_logged_out">로그인 정보가 없습니다.</string>
     <string name="setting_logout_done">로그아웃했습니다.</string>
