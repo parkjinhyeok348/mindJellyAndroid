@@ -103,6 +103,9 @@ public class AgingRoomAdapter extends RecyclerView.Adapter<AgingRoomAdapter.View
             currentCall.enqueue(new Callback<JellyCombResDTO>() {
                 @Override
                 public void onResponse(Call<JellyCombResDTO> call, Response<JellyCombResDTO> response) {
+                    if (call.isCanceled()) {
+                        return;
+                    }
                     if (!response.isSuccessful() || response.body() == null) {
                         return;
                     }
