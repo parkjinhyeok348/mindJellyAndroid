@@ -57,6 +57,9 @@
     <string name="dialog_delete_user_positive">삭제</string>
     <string name="dialog_delete_user_negative">취소</string>
 
+    <!-- 홈화면 설정 진입 -->
+    <string name="main_settings_desc">설정</string>
+
     <!-- 홈화면 말풍선 격려 문구 -->
     <string-array name="home_speech_messages">
         <item>오늘 마음은 어때요?</item>

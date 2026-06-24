@@ -15,6 +15,7 @@ import com.mindJellyProject.mindjelly.basicEmo.view.TodayJellyActivity;
 import com.mindJellyProject.mindjelly.databinding.ActivityMainBinding;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.view.JellyDrawerActivity;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.view.JellySelectionBoxActivity;
+import com.mindJellyProject.mindjelly.users.view.SettingActivity;
 
 import java.util.Random;
 
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnSelectionBox.setOnClickListener(v ->
                 startActivity(new Intent(this, JellySelectionBoxActivity.class)));
+
+        binding.btnSettings.setOnClickListener(v ->
+                startActivity(new Intent(this, SettingActivity.class)));
     }
 
     static String pickRandom(String[] messages, Random random) {

@@ -96,6 +96,21 @@
 
         </GridLayout>
 
+        <!-- 우측 상단 설정 진입 (배경 위 오버레이) -->
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/main_settings_desc"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_settings"
+            app:tint="#444444" />
+
         <!-- 젤리셀렉션박스 — 다른 버튼과 동일 크기, 중앙 정렬 -->
         <LinearLayout
             android:layout_width="match_parent"
