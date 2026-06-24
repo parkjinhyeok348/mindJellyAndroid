@@ -13,23 +13,16 @@ final class AgingRoomMapper {
     private AgingRoomMapper() {
     }
 
-    static List<DisplayJelly> toAgingRows(List<JellyDrawerResDTO> jellies, LocalDate today) {
-        List<DisplayJelly> rows = new ArrayList<>();
+    /** 숙성중(AGING) 젤리만 남긴다. */
+    static List<JellyDrawerResDTO> toAgingRows(List<JellyDrawerResDTO> jellies) {
+        List<JellyDrawerResDTO> rows = new ArrayList<>();
         if (jellies == null) {
             return rows;
         }
-
         for (JellyDrawerResDTO jelly : jellies) {
-            if (!isAging(jelly)) {
-                continue;
+            if (isAging(jelly)) {
+                rows.add(jelly);
             }
-            rows.add(new DisplayJelly(
-                    "젤리 ID: " + jelly.getJellyId(),
-                    "상태: 숙성중",
-                    "생성일: " + nullToDash(jelly.getCreateDate()),
-                    "감정: " + nullToDash(jelly.getEmo1Name()) + " / " + nullToDash(jelly.getEmo2Name()),
-                    formatDday(jelly.getCreateDate(), today)
-            ));
         }
         return rows;
     }
@@ -38,7 +31,6 @@ final class AgingRoomMapper {
         if (jellies == null) {
             return false;
         }
-
         for (JellyDrawerResDTO jelly : jellies) {
             String status = jelly.getStatus();
             if ("MATURED".equalsIgnoreCase(status)
@@ -50,13 +42,17 @@ final class AgingRoomMapper {
         return false;
     }
 
-    private static boolean isAging(JellyDrawerResDTO jelly) {
-        String status = jelly.getStatus();
-        return "AGING".equalsIgnoreCase(status)
-                || (status == null && Boolean.TRUE.equals(jelly.getAging()));
+    /** "기쁨 + 평온" 형태의 카드 제목. */
+    static String emotionTitle(JellyDrawerResDTO jelly) {
+        return nullToDash(jelly.getEmo1Name()) + " + " + nullToDash(jelly.getEmo2Name());
     }
 
-    private static String formatDday(String createDate, LocalDate today) {
+    static String formatCreatedDate(String createDate) {
+        return nullToDash(createDate);
+    }
+
+    /** 생성일 + 7일 기준 남은 일수. "D-4" / "D-Day" / 파싱불가 시 "D-?". */
+    static String formatDday(String createDate, LocalDate today) {
         try {
             LocalDate completedDate = LocalDate.parse(createDate).plusDays(AGING_DAYS);
             long remainingDays = ChronoUnit.DAYS.between(today, completedDate);
@@ -66,23 +62,13 @@ final class AgingRoomMapper {
         }
     }
 
-    private static String nullToDash(String value) {
-        return value == null || value.trim().isEmpty() ? "-" : value;
+    private static boolean isAging(JellyDrawerResDTO jelly) {
+        String status = jelly.getStatus();
+        return "AGING".equalsIgnoreCase(status)
+                || (status == null && Boolean.TRUE.equals(jelly.getAging()));
     }
 
-    static final class DisplayJelly {
-        final String title;
-        final String statusText;
-        final String createDateText;
-        final String emotionText;
-        final String dDayText;
-
-        DisplayJelly(String title, String statusText, String createDateText, String emotionText, String dDayText) {
-            this.title = title;
-            this.statusText = statusText;
-            this.createDateText = createDateText;
-            this.emotionText = emotionText;
-            this.dDayText = dDayText;
-        }
+    private static String nullToDash(String value) {
+        return value == null || value.trim().isEmpty() ? "-" : value;
     }
 }

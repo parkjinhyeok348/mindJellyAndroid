@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AgingRoomMapperTest {
     @Test
-    public void mapsOnlyAgingJelliesWithRemainingDays() {
+    public void filtersOnlyAgingJellies() {
         JellyDrawerResDTO aging = new JellyDrawerResDTO(1L, 10L, true, "2026-05-15");
         aging.setStatus("AGING");
         aging.setEmo1Name("기쁨");
@@ -22,15 +22,29 @@ public class AgingRoomMapperTest {
         JellyDrawerResDTO waiting = new JellyDrawerResDTO(2L, 11L, false, "2026-05-15");
         waiting.setStatus("WAITING");
 
-        List<AgingRoomMapper.DisplayJelly> rows = AgingRoomMapper.toAgingRows(
-                Arrays.asList(aging, waiting),
-                LocalDate.of(2026, 5, 18)
-        );
+        List<JellyDrawerResDTO> rows = AgingRoomMapper.toAgingRows(Arrays.asList(aging, waiting));
 
         assertEquals(1, rows.size());
-        assertEquals("젤리 ID: 1", rows.get(0).title);
-        assertEquals("감정: 기쁨 / 평온", rows.get(0).emotionText);
-        assertEquals("D-4", rows.get(0).dDayText);
+        assertEquals(Long.valueOf(1L), rows.get(0).getJellyId());
+    }
+
+    @Test
+    public void formatsEmotionTitleAndDday() {
+        JellyDrawerResDTO aging = new JellyDrawerResDTO(1L, 10L, true, "2026-05-15");
+        aging.setStatus("AGING");
+        aging.setEmo1Name("기쁨");
+        aging.setEmo2Name("평온");
+
+        assertEquals("기쁨 + 평온", AgingRoomMapper.emotionTitle(aging));
+        assertEquals("D-4", AgingRoomMapper.formatDday("2026-05-15", LocalDate.of(2026, 5, 18)));
+        assertEquals("D-Day", AgingRoomMapper.formatDday("2026-05-10", LocalDate.of(2026, 5, 18)));
+        assertEquals("D-?", AgingRoomMapper.formatDday(null, LocalDate.of(2026, 5, 18)));
+    }
+
+    @Test
+    public void formatsCreatedDateNullToDash() {
+        assertEquals("2026-05-15", AgingRoomMapper.formatCreatedDate("2026-05-15"));
+        assertEquals("-", AgingRoomMapper.formatCreatedDate(null));
     }
 
     @Test
