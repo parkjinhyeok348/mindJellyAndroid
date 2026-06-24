@@ -53,12 +53,14 @@ public class SettingActivity extends AppCompatActivity {
 
     private void refreshStatus() {
         long userId = sessionManager.getUserId();
-        tvStatus.setText(userId > 0 ? "濡쒓렇?몃맖: ?ъ슜??ID " + userId : "濡쒓렇???뺣낫媛 ?놁뒿?덈떎.");
+        tvStatus.setText(userId > 0
+                ? getString(R.string.setting_status_logged_in, userId)
+                : getString(R.string.setting_status_logged_out));
     }
 
     private void logout() {
         sessionManager.clear();
-        Toast.makeText(this, "濡쒓렇?꾩썐?덉뒿?덈떎.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.setting_logout_done, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
@@ -66,15 +68,15 @@ public class SettingActivity extends AppCompatActivity {
     private void confirmDeleteUser() {
         long userId = sessionManager.getUserId();
         if (userId <= 0) {
-            Toast.makeText(this, "濡쒓렇???뺣낫媛 ?놁뒿?덈떎.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.setting_status_logged_out, Toast.LENGTH_SHORT).show();
             return;
         }
 
         new AlertDialog.Builder(this)
-                .setTitle("?뚯썝 ?덊눜")
-                .setMessage("怨꾩젙????젣?섏떆寃좎뒿?덇퉴?")
-                .setNegativeButton("痍⑥냼", null)
-                .setPositiveButton("??젣", (dialog, which) -> deleteUser(userId))
+                .setTitle(R.string.dialog_delete_user_title)
+                .setMessage(R.string.dialog_delete_user_message)
+                .setNegativeButton(R.string.dialog_delete_user_negative, null)
+                .setPositiveButton(R.string.dialog_delete_user_positive, (dialog, which) -> deleteUser(userId))
                 .show();
     }
 
@@ -84,11 +86,11 @@ public class SettingActivity extends AppCompatActivity {
             setLoading(false);
             if (result != null && result.getError() == null) {
                 sessionManager.clear();
-                Toast.makeText(this, "怨꾩젙????젣?덉뒿?덈떎.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.setting_delete_user_done, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
             } else {
-                String error = result == null ? "怨꾩젙 ??젣???ㅽ뙣?덉뒿?덈떎." : result.getError();
+                String error = result == null ? getString(R.string.setting_delete_user_failed) : result.getError();
                 tvStatus.setText(error);
             }
         });

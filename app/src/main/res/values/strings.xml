@@ -42,6 +42,17 @@
     <string name="dialog_today_jelly_positive">서랍 보기</string>
     <string name="dialog_today_jelly_negative">닫기</string>
 
+    <!-- 설정 화면 (SettingActivity) -->
+    <string name="setting_status_logged_in">로그인됨: 사용자 ID %1$d</string>
+    <string name="setting_status_logged_out">로그인 정보가 없습니다.</string>
+    <string name="setting_logout_done">로그아웃했습니다.</string>
+    <string name="setting_delete_user_done">계정을 삭제했습니다.</string>
+    <string name="setting_delete_user_failed">계정 삭제에 실패했습니다.</string>
+    <string name="dialog_delete_user_title">회원 탈퇴</string>
+    <string name="dialog_delete_user_message">계정을 삭제하시겠습니까?</string>
+    <string name="dialog_delete_user_positive">삭제</string>
+    <string name="dialog_delete_user_negative">취소</string>
+
     <!-- 홈화면 말풍선 격려 문구 -->
     <string-array name="home_speech_messages">
         <item>오늘 마음은 어때요?</item>
