@@ -8,7 +8,6 @@ import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mindJellyProject.mindjelly.BuildConfig;
 import com.mindJellyProject.mindjelly.MainActivity;
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.users.view.LoginActivity;
@@ -38,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             SessionManager sessionManager = SessionManager.getInstance(SplashActivity.this);
-            if (BuildConfig.DEBUG || sessionManager.hasToken()) {
+            if (sessionManager.hasToken()) {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
             } else {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));

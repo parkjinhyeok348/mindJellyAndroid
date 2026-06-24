@@ -14,13 +14,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.common.ErrorMessageUtil;
 import com.mindJellyProject.mindjelly.common.SessionManager;
 import com.mindJellyProject.mindjelly.databinding.ActivityJellyDrawerBinding;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.viewmodel.JellyViewModel;
-import com.mindJellyProject.mindjelly.users.view.LoginActivity;
 
 import java.util.List;
 
@@ -80,17 +78,8 @@ public class JellyDrawerActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // userId 검증 (T-02D-01)
         SessionManager sessionManager = SessionManager.getInstance(this);
         long userId = sessionManager.getUserId();
-        if (userId == -1L) {
-            Toast.makeText(this, getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-            return;
-        }
         Log.d(TAG, "Requesting jelly list for userId: " + userId);
 
         // getJellyList 호출 — 로딩 시작
