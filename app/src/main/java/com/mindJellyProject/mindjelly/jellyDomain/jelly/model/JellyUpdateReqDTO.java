@@ -20,13 +20,16 @@ import java.util.List;
 public class JellyUpdateReqDTO {
     @SerializedName("jellyName")
     private String jellyName;
+    @SerializedName("title")
+    private String title;
     @SerializedName("content")
     private String content;
     @SerializedName("jellyImages")
     private List<JellyImage> jellyImages;
 
-    public JellyUpdateReqDTO(String jellyName, String content, List<JellyImage> jellyImages) {
+    public JellyUpdateReqDTO(String jellyName, String title, String content, List<JellyImage> jellyImages) {
         this.jellyName = jellyName;
+        this.title = title;
         this.content = content;
         this.jellyImages = jellyImages;
     }
@@ -37,6 +40,14 @@ public class JellyUpdateReqDTO {
 
     public void setJellyName(String jellyName) {
         this.jellyName = jellyName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

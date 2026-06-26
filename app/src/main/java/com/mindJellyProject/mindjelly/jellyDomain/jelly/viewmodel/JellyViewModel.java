@@ -64,6 +64,10 @@ public class JellyViewModel extends AndroidViewModel {
         return repository.getJellyById(jellyId);
     }
 
+    public LiveData<Resource<ResponseBody>> deleteJelly(Long jellyId) {
+        return repository.deleteJelly(jellyId);
+    }
+
     public LiveData<Resource<List<JellyDrawerResDTO>>> getJellyList(Long userId) {
         return repository.getJellyList(userId);
     }

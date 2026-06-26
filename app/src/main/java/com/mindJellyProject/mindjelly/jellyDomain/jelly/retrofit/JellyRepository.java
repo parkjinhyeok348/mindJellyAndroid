@@ -104,6 +104,27 @@ public class JellyRepository {
         return liveData;
     }
 
+    // 젤리 삭제
+    public LiveData<Resource<ResponseBody>> deleteJelly(Long jellyId) {
+        MutableLiveData<Resource<ResponseBody>> liveData = new MutableLiveData<>();
+        jellyService.deleteJelly(jellyId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    liveData.postValue(Resource.success(response.body()));
+                } else {
+                    liveData.postValue(Resource.error("Error: " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                liveData.postValue(Resource.error(RepositoryError.message(t)));
+            }
+        });
+        return liveData;
+    }
+
     // JellyId로 젤리 상세 정보 출력
     public LiveData<Resource<JellyResDTO>> getJellyById(Long jellyId) {
         MutableLiveData<Resource<JellyResDTO>> liveData = new MutableLiveData<>();

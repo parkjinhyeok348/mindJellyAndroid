@@ -13,6 +13,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -56,4 +57,8 @@ public interface JellyService {
      */
     @PATCH("/jelly/{jellyId}")
     Call<ResponseBody> startAging(@Path("jellyId") Long jellyId, @Body JellyStartAgingReqDTO reqDTO);
+
+    // 젤리 삭제 — DELETE /jelly/{jellyId}. 응답 본문 무관, isSuccessful() 체크만 사용
+    @DELETE("/jelly/{jellyId}")
+    Call<ResponseBody> deleteJelly(@Path("jellyId") Long jellyId);
 }

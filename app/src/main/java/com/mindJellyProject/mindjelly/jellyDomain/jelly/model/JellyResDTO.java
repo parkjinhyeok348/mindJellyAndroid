@@ -26,6 +26,8 @@ public class JellyResDTO {
     private Long jellyCombId;
     @SerializedName("jellyName")
     private String jellyName;
+    @SerializedName("title")
+    private String title;
     @SerializedName("content")
     private String content;
     @SerializedName("isAging")
@@ -80,6 +82,14 @@ public class JellyResDTO {
 
     public void setJellyName(String jellyName) {
         this.jellyName = jellyName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
