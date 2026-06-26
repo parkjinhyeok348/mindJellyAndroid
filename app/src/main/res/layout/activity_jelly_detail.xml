@@ -42,4 +42,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />
 
+    <!-- 숙성하기 — 숙성중이 아닐 때만 노출 (코드에서 visibility 제어) -->
+    <Button
+        android:id="@+id/btnStartAging"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/accent_blue"
+        android:text="@string/btn_start_aging"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

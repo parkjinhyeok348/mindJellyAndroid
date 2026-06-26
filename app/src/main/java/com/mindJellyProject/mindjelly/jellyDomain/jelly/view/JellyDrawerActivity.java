@@ -87,8 +87,17 @@ public class JellyDrawerActivity extends AppCompatActivity {
         jellyViewModel.getJellyList(userId).observe(this, resource -> {
             jellyViewModel.isLoading.postValue(false);
             if (resource != null && resource.isSuccess()) {
-                List<JellyDrawerResDTO> list = resource.getData();
-                if (list == null || list.isEmpty()) {
+                // 숙성중(isAging=true) 젤리는 에이징룸에서 보이므로 서랍에서는 제외
+                List<JellyDrawerResDTO> list = new java.util.ArrayList<>();
+                List<JellyDrawerResDTO> all = resource.getData();
+                if (all != null) {
+                    for (JellyDrawerResDTO j : all) {
+                        if (!Boolean.TRUE.equals(j.getAging())) {
+                            list.add(j);
+                        }
+                    }
+                }
+                if (list.isEmpty()) {
                     // 빈 상태 (DRAW-04)
                     binding.rvJellyList.setVisibility(View.GONE);
                     binding.tvEmptyState.setVisibility(View.VISIBLE);

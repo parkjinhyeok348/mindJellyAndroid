@@ -29,7 +29,7 @@
     <string name="success_aging_started">숙성을 시작했어요!</string>
     <string name="error_aging_failed">숙성 시작에 실패했어요. 다시 시도해주세요</string>
     <string name="success_jelly_saved">젤리가 저장됐어요!</string>
-    <string name="btn_start_aging">숙성시키기</string>
+    <string name="btn_start_aging">숙성하기</string>
     <string name="status_waiting">대기중</string>
     <string name="status_aging">숙성중</string>
     <string name="status_complete">숙성완료</string>
@@ -43,6 +43,12 @@
     <string name="dialog_today_jelly_message">오늘은 이미 젤리를 기록했어요.\n서랍에서 확인해볼까요?</string>
     <string name="dialog_today_jelly_positive">서랍 보기</string>
     <string name="dialog_today_jelly_negative">닫기</string>
+
+    <!-- 숙성 시작 확인 다이얼로그 -->
+    <string name="dialog_aging_title">숙성하기</string>
+    <string name="dialog_aging_message">숙성을 시작하면 7일간 젤리 서랍에서 사라져요.\n시작할까요?</string>
+    <string name="dialog_aging_positive">숙성하기</string>
+    <string name="dialog_aging_negative">취소</string>
 
     <!-- 설정 화면 (SettingActivity) -->
     <string name="setting_title">설정</string>
