@@ -27,10 +27,8 @@ import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellySaveReqDTO;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.view.JellyDrawerActivity;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.viewmodel.JellyViewModel;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 public class TodayJellyActivity extends AppCompatActivity {
 
@@ -119,15 +117,19 @@ public class TodayJellyActivity extends AppCompatActivity {
                 return;
             }
 
-            String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            // 백엔드 agingPeriod/createDate는 LocalDate(yyyy-MM-dd)이므로 날짜 문자열로 전송.
+            // 숙성 기간 7일 → agingPeriod = 생성일 + 7일 (숙성 완료 날짜)
+            LocalDate today = LocalDate.now();
+            String createDate = today.toString();
+            String agingDate = today.plusDays(7).toString();
             JellySaveReqDTO reqDTO = new JellySaveReqDTO(
                     userId,
                     cachedJellyCombId,
                     "오늘의 젤리",
                     title,
                     diary,
-                    "7",
-                    today,
+                    agingDate,
+                    createDate,
                     null
             );
 
