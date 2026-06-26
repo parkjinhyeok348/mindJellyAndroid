@@ -24,6 +24,8 @@ public class JellyDrawerResDTO {
     private Boolean isAging;
     @SerializedName("createDate")
     private String createDate;
+    @SerializedName("jellyIcon")
+    private String jellyIcon;
     @SerializedName("emo1Name")
     private String emo1Name;
     @SerializedName("emo1Icon")
@@ -72,6 +74,14 @@ public class JellyDrawerResDTO {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getJellyIcon() {
+        return jellyIcon;
+    }
+
+    public void setJellyIcon(String jellyIcon) {
+        this.jellyIcon = jellyIcon;
     }
 
     public String getEmo1Name() {

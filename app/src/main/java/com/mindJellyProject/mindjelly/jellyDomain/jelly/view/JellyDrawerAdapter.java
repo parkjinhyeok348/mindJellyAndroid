@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
 import com.mindJellyProject.mindjelly.R;
-import com.mindJellyProject.mindjelly.common.RetrofitClient;
+import com.mindJellyProject.mindjelly.common.NetworkConfig;
 import com.mindJellyProject.mindjelly.jellyDomain.jelly.model.JellyDrawerResDTO;
 
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Objects;
 
 public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDrawerAdapter.ViewHolder> {
@@ -59,19 +61,14 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         JellyDrawerResDTO jelly = getItem(position);
 
-        holder.tvCreateDate.setText(jelly.getCreateDate());
+        holder.tvCreateDate.setText(formatDate(jelly.getCreateDate()));
 
+        // 조합 젤리 이미지 1개 표시 (생성 시 뜨는 조합 이미지와 동일)
         Glide.with(holder.itemView.getContext())
-                .load(RetrofitClient.BASE_SERVER_URL + jelly.getEmo1Icon())
+                .load(NetworkConfig.assetUrl(jelly.getJellyIcon()))
                 .placeholder(android.R.drawable.ic_menu_report_image)
                 .error(android.R.drawable.stat_notify_error)
-                .into(holder.emo1ImageView);
-
-        Glide.with(holder.itemView.getContext())
-                .load(RetrofitClient.BASE_SERVER_URL + jelly.getEmo2Icon())
-                .placeholder(android.R.drawable.ic_menu_report_image)
-                .error(android.R.drawable.stat_notify_error)
-                .into(holder.emo2ImageView);
+                .into(holder.combinedImageView);
 
         holder.itemView.setOnClickListener(v -> {
             if (itemClickListener != null) {
@@ -109,14 +106,25 @@ public class JellyDrawerAdapter extends ListAdapter<JellyDrawerResDTO, JellyDraw
         return sb.toString();
     }
 
+    // ISO(yyyy-MM-dd) → yy.MM.dd 표시 포맷
+    private static String formatDate(String isoDate) {
+        if (isoDate == null) return "";
+        try {
+            LocalDate d = LocalDate.parse(isoDate);
+            return String.format(Locale.getDefault(), "%02d.%02d.%02d",
+                    d.getYear() % 100, d.getMonthValue(), d.getDayOfMonth());
+        } catch (Exception e) {
+            return isoDate;
+        }
+    }
+
     static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        ImageView emo1ImageView, emo2ImageView;
+        ImageView combinedImageView;
         TextView tvCreateDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            emo1ImageView = itemView.findViewById(R.id.emo1ImageView);
-            emo2ImageView = itemView.findViewById(R.id.emo2ImageView);
+            combinedImageView = itemView.findViewById(R.id.combinedImageView);
             tvCreateDate = itemView.findViewById(R.id.tvCreateDate);
         }
     }
