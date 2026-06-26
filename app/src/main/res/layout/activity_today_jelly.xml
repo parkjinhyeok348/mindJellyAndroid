@@ -8,99 +8,141 @@
     android:background="@drawable/basic_background"
     tools:context=".basicEmo.view.TodayJellyActivity">
 
-    <ImageView
-        android:id="@+id/combinedJellyImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:contentDescription="@string/cd_jelly_preview"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:src="@android:drawable/ic_menu_report_image" />
-
-    <TextView
-        android:id="@+id/tvDebugEmo1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="12sp"
-        android:textColor="#888888"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/combinedJellyImageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="감정1: 기쁨" />
-
-    <TextView
-        android:id="@+id/tvDebugEmo2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="12sp"
-        android:textColor="#888888"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tvDebugEmo1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="감정2: 설렘" />
-
-    <TextView
-        android:id="@+id/tvDebugCombId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="12sp"
-        android:textColor="#888888"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tvDebugEmo2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="CombId: 42" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/emoRecyclerView"
+    <!-- ===================== Step 1: 감정 선택 ===================== -->
+    <LinearLayout
+        android:id="@+id/step1Container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"
-        android:fadeScrollbars="false"
-        android:scrollbars="vertical"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/btnNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/combinedJellyImageView"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/etDiary"
+        <!-- 상단 조합 젤리 박스 (조합 이미지 + 조합 감정 이름) -->
+        <LinearLayout
+            android:id="@+id/combinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_combined_box"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/combinedJellyImageView"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:contentDescription="@string/cd_jelly_preview"
+                android:scaleType="fitCenter"
+                tools:src="@android:drawable/ic_menu_report_image" />
+        </LinearLayout>
+
+        <!-- 젤리 그리드 카드 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_card_white"
+            android:padding="8dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/emoRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="false"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- ===================== Step 2: 일기 작성 ===================== -->
+    <LinearLayout
+        android:id="@+id/step2Container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_edit_text"
-        android:gravity="top|start"
-        android:hint="@string/hint_diary_entry"
-        android:inputType="textMultiLine|textCapSentences"
-        android:minHeight="80dp"
-        android:padding="12dp"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_hint"
-        android:textSize="14sp"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_diary_frame"
+        android:orientation="vertical"
+        android:padding="16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/combinedJellyImageView" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- 오리 캐릭터 자리 (이미지는 별도 제공 예정) -->
+        <ImageView
+            android:id="@+id/ivDuck"
+            android:layout_width="140dp"
+            android:layout_height="120dp"
+            android:layout_gravity="start"
+            android:contentDescription="@string/cd_duck"
+            android:scaleType="fitStart"
+            android:src="@drawable/diary_duck" />
+
+        <!-- 일기 제목 -->
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_card_white"
+            android:hint="@string/hint_diary_title"
+            android:importantForAutofill="no"
+            android:inputType="text|textCapSentences"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:textSize="14sp" />
+
+        <!-- 일기 본문 -->
+        <EditText
+            android:id="@+id/etDiary"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_card_white"
+            android:gravity="top|start"
+            android:hint="@string/hint_diary_entry"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine|textCapSentences"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- ===================== 하단 버튼 ===================== -->
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:alpha="0.5"
+        android:backgroundTint="@color/accent_blue"
+        android:enabled="false"
+        android:text="@string/btn_next"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnSave"
@@ -114,23 +156,6 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
-        android:backgroundTint="@color/accent_blue"
-        android:enabled="false"
-        android:alpha="0.5"
-        android:text="@string/btn_next"
-        android:textColor="@color/white"
-        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

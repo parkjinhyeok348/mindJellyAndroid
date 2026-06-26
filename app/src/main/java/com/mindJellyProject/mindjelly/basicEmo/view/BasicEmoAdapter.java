@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,8 +61,7 @@ public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHo
                 .error(android.R.drawable.stat_notify_error)
                 .into(holder.emoImageView);
 
-        // 감정 이름 표시 (JELLY-01)
-        holder.tvEmoName.setText(emo.getEmoName());
+        // 감정 이름은 젤리 이미지에 포함되어 있어 별도 텍스트 라벨을 두지 않음
 
         // 현재 아이템이 선택된 상태인지 확인 — FrameLayout에 직접 setSelected 적용
         holder.frameLayout.setSelected(selectedPositions.contains(position));
@@ -105,13 +103,11 @@ public class BasicEmoAdapter extends RecyclerView.Adapter<BasicEmoAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView emoImageView;
-        TextView tvEmoName;
         FrameLayout frameLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             emoImageView = itemView.findViewById(R.id.emoImageView);
-            tvEmoName = itemView.findViewById(R.id.tvEmoName);
             frameLayout = itemView.findViewById(R.id.emoFrameLayout);
         }
     }

@@ -21,15 +21,4 @@
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/tvEmoName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="@color/text_secondary"
-        android:textSize="12sp" />
-
 </LinearLayout>

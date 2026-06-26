@@ -24,6 +24,8 @@ public class JellySaveReqDTO {
     private Long jellyCombId;
     @SerializedName("jellyName")
     private String jellyName;
+    @SerializedName("title")
+    private String title;
     @SerializedName("content")
     private String content;
     @SerializedName("agingPeriod")
@@ -33,11 +35,12 @@ public class JellySaveReqDTO {
     @SerializedName("jellyImages")
     private List<JellyImage> jellyImages;
 
-    public JellySaveReqDTO(Long userId, Long jellyCombId, String jellyName, String content, String agingPeriod,
-                           String createDate, List<JellyImage> jellyImages) {
+    public JellySaveReqDTO(Long userId, Long jellyCombId, String jellyName, String title, String content,
+                           String agingPeriod, String createDate, List<JellyImage> jellyImages) {
         this.userId = userId;
         this.jellyCombId = jellyCombId;
         this.jellyName = jellyName;
+        this.title = title;
         this.content = content;
         this.agingPeriod = agingPeriod;
         this.createDate = createDate;
@@ -66,6 +69,14 @@ public class JellySaveReqDTO {
 
     public void setJellyName(String jellyName) {
         this.jellyName = jellyName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

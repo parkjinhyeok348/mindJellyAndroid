@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.mindJellyProject.mindjelly.BuildConfig;
 import com.mindJellyProject.mindjelly.R;
 import com.mindJellyProject.mindjelly.basicEmo.model.BasicEmoResDTO;
 import com.mindJellyProject.mindjelly.basicEmo.viewmodel.BasicEmoViewModel;
@@ -49,9 +48,8 @@ public class TodayJellyActivity extends AppCompatActivity {
     private Long cachedJellyCombId = null;
 
     private boolean isStep2 = false;
+    private boolean twoSelected = false;
     private boolean checkingDuplicate = false;
-    private String selectedEmo1Name = "";
-    private String selectedEmo2Name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +81,8 @@ public class TodayJellyActivity extends AppCompatActivity {
         checkingDuplicate = true;
         checkDuplicateAndProceed();
 
-        // 초기에는 조합된 이미지 가리기
-        binding.combinedJellyImageView.setVisibility(View.GONE);
+        // 초기에는 조합 젤리 박스를 INVISIBLE로 두어 상단 공간을 항상 예약 (2개 미선택 시 여백)
+        binding.combinedBox.setVisibility(View.INVISIBLE);
 
         // isLoading observe — pbLoading 표시 및 btnSave 비활성화 (QUAL-01)
         jellyViewModel.isLoading.observe(this, loading -> {
@@ -99,6 +97,7 @@ public class TodayJellyActivity extends AppCompatActivity {
 
         // 저장 버튼 클릭 리스너 (Pitfall 2 방지 — observe 중복 등록 없이 버튼 클릭 내부에서 관찰)
         binding.btnSave.setOnClickListener(v -> {
+            String title = binding.etTitle.getText().toString().trim();
             String diary = binding.etDiary.getText().toString().trim();
 
             // T-02B-01: 빈 일기 거부
@@ -125,6 +124,7 @@ public class TodayJellyActivity extends AppCompatActivity {
                     userId,
                     cachedJellyCombId,
                     "오늘의 젤리",
+                    title,
                     diary,
                     "7",
                     today,
@@ -152,13 +152,15 @@ public class TodayJellyActivity extends AppCompatActivity {
         // 선택 상태 변경 리스너 등록
         adapter.setOnSelectionChangedListener(selectedEmos -> {
             if (selectedEmos.size() == 2) {
+                twoSelected = true;
                 binding.btnNext.setEnabled(true);
                 binding.btnNext.setAlpha(1.0f);
 
                 Long id1 = selectedEmos.get(0).getEmoId();
                 Long id2 = selectedEmos.get(1).getEmoId();
-                selectedEmo1Name = selectedEmos.get(0).getEmoName();
-                selectedEmo2Name = selectedEmos.get(1).getEmoName();
+
+                // 2개 선택 시 조합 박스를 즉시 노출 (이미지는 비동기 로드, 이름은 이미지에 포함)
+                binding.combinedBox.setVisibility(View.VISIBLE);
 
                 fetchCombinedJellyIcon(id1, id2);
 
@@ -172,14 +174,14 @@ public class TodayJellyActivity extends AppCompatActivity {
                     }
                 });
             } else {
+                twoSelected = false;
                 binding.btnNext.setEnabled(false);
                 binding.btnNext.setAlpha(0.5f);
 
-                binding.combinedJellyImageView.setVisibility(View.GONE);
+                // 2개 미선택 시 박스를 INVISIBLE로 두어 공간은 유지하되 여백으로 표시
+                binding.combinedBox.setVisibility(View.INVISIBLE);
                 binding.combinedJellyImageView.setImageDrawable(null);
                 cachedJellyCombId = null;
-                selectedEmo1Name = "";
-                selectedEmo2Name = "";
             }
         });
     }
@@ -191,14 +193,13 @@ public class TodayJellyActivity extends AppCompatActivity {
                 String iconPath = resource.getData();
                 Log.d(TAG, "젤리 조합 아이콘 요청 - iconPath: " + iconPath);
                 if (iconPath != null) {
-                    binding.combinedJellyImageView.setVisibility(View.VISIBLE);
                     Glide.with(this)
                             .load(NetworkConfig.assetUrl(iconPath))
                             .into(binding.combinedJellyImageView);
                 }
             } else if (resource != null && resource.isError()) {
+                // 이미지 로드 실패 시에도 박스(조합 이름)는 유지 — 박스 노출은 선택 상태로 제어
                 Log.e(TAG, "젤리 조합 아이콘 로딩 에러: " + resource.getError());
-                binding.combinedJellyImageView.setVisibility(View.GONE);
             }
         });
     }
@@ -254,15 +255,13 @@ public class TodayJellyActivity extends AppCompatActivity {
 
     private void showStep1() {
         isStep2 = false;
-        binding.emoRecyclerView.setVisibility(View.VISIBLE);
+        binding.step1Container.setVisibility(View.VISIBLE);
+        binding.step2Container.setVisibility(View.GONE);
         binding.btnNext.setVisibility(View.VISIBLE);
-        binding.etDiary.setVisibility(View.GONE);
         binding.btnSave.setVisibility(View.GONE);
-        binding.tvDebugEmo1.setVisibility(View.GONE);
-        binding.tvDebugEmo2.setVisibility(View.GONE);
-        binding.tvDebugCombId.setVisibility(View.GONE);
-        if (cachedJellyCombId != null) {
-            binding.combinedJellyImageView.setVisibility(View.VISIBLE);
+        // Step1 복귀 시 박스는 선택 상태로 복원 (2개면 노출, 아니면 여백)
+        binding.combinedBox.setVisibility(twoSelected ? View.VISIBLE : View.INVISIBLE);
+        if (twoSelected) {
             binding.btnNext.setEnabled(true);
             binding.btnNext.setAlpha(1.0f);
         }
@@ -270,23 +269,10 @@ public class TodayJellyActivity extends AppCompatActivity {
 
     private void showStep2() {
         isStep2 = true;
-        binding.emoRecyclerView.setVisibility(View.GONE);
-        if (cachedJellyCombId != null) {
-            binding.combinedJellyImageView.setVisibility(View.VISIBLE);
-        }
+        binding.step1Container.setVisibility(View.GONE);
+        binding.step2Container.setVisibility(View.VISIBLE);
         binding.btnNext.setVisibility(View.GONE);
-        binding.etDiary.setVisibility(View.VISIBLE);
         binding.btnSave.setVisibility(View.VISIBLE);
-
-        //noinspection SetTextI18n
-        if (BuildConfig.DEBUG) {
-            binding.tvDebugEmo1.setText("감정1: " + selectedEmo1Name);
-            binding.tvDebugEmo2.setText("감정2: " + selectedEmo2Name);
-            binding.tvDebugCombId.setText("CombId: " + (cachedJellyCombId != null ? cachedJellyCombId : "(loading...)"));
-            binding.tvDebugEmo1.setVisibility(View.VISIBLE);
-            binding.tvDebugEmo2.setVisibility(View.VISIBLE);
-            binding.tvDebugCombId.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
