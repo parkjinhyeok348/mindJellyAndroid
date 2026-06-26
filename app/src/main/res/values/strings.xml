@@ -50,6 +50,9 @@
     <string name="dialog_aging_positive">숙성하기</string>
     <string name="dialog_aging_negative">취소</string>
 
+    <!-- 에이징룸 숙성 완성 -->
+    <string name="btn_complete_aging">완성하기</string>
+
     <!-- 젤리 수정 / 삭제 -->
     <string name="btn_edit_jelly">수정</string>
     <string name="btn_delete_jelly">삭제</string>

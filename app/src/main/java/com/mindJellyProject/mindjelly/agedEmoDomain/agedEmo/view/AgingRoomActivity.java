@@ -54,6 +54,17 @@ public class AgingRoomActivity extends AppCompatActivity {
         adapter = new AgingRoomAdapter(this);
         recyclerView.setAdapter(adapter);
 
+        // 완성하기 → 숙성 완료 화면으로 이동
+        adapter.setOnCompleteClickListener(jelly -> {
+            Intent intent = new Intent(this, AgingCompleteActivity.class);
+            intent.putExtra(AgingCompleteActivity.EXTRA_JELLY_ID,
+                    jelly.getJellyId() != null ? jelly.getJellyId() : -1L);
+            intent.putExtra(AgingCompleteActivity.EXTRA_JELLY_COMB_ID,
+                    jelly.getJellyCombId() != null ? jelly.getJellyCombId() : -1L);
+            intent.putExtra(AgingCompleteActivity.EXTRA_CREATE_DATE, jelly.getCreateDate());
+            startActivity(intent);
+        });
+
         Button btnRefresh = findViewById(R.id.btn_refresh_aging);
         ImageButton btnNotification = findViewById(R.id.btn_aging_notification);
         btnNotification.setOnClickListener(v ->

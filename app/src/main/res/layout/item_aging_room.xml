@@ -51,4 +51,16 @@
             android:textStyle="bold"
             tools:text="D-4" />
     </LinearLayout>
+
+    <!-- 숙성 완료(D-Day) 항목에만 노출 (어댑터에서 visibility 제어) -->
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@color/accent_blue"
+        android:text="@string/btn_complete_aging"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone" />
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,11 +30,20 @@ import retrofit2.Response;
 
 public class AgingRoomAdapter extends RecyclerView.Adapter<AgingRoomAdapter.ViewHolder> {
 
+    public interface OnCompleteClickListener {
+        void onComplete(JellyDrawerResDTO jelly);
+    }
+
     private final List<JellyDrawerResDTO> items = new ArrayList<>();
     private final JellyCombService jellyCombService;
+    private OnCompleteClickListener completeClickListener;
 
     AgingRoomAdapter(Context context) {
         this.jellyCombService = RetrofitClient.createService(JellyCombService.class, context);
+    }
+
+    void setOnCompleteClickListener(OnCompleteClickListener listener) {
+        this.completeClickListener = listener;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -55,7 +65,7 @@ public class AgingRoomAdapter extends RecyclerView.Adapter<AgingRoomAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(items.get(position));
+        holder.bind(items.get(position), completeClickListener);
     }
 
     @Override
@@ -74,6 +84,7 @@ public class AgingRoomAdapter extends RecyclerView.Adapter<AgingRoomAdapter.View
         private final TextView tvEmotionName;
         private final TextView tvCreateDate;
         private final TextView tvDday;
+        private final Button btnComplete;
         private final JellyCombService jellyCombService;
         private Call<JellyCombResDTO> currentCall;
 
@@ -84,12 +95,22 @@ public class AgingRoomAdapter extends RecyclerView.Adapter<AgingRoomAdapter.View
             tvEmotionName = itemView.findViewById(R.id.tv_emotion_name);
             tvCreateDate = itemView.findViewById(R.id.tv_create_date);
             tvDday = itemView.findViewById(R.id.tv_dday);
+            btnComplete = itemView.findViewById(R.id.btn_complete);
         }
 
-        void bind(JellyDrawerResDTO item) {
+        void bind(JellyDrawerResDTO item, OnCompleteClickListener completeClickListener) {
             tvEmotionName.setText(AgingRoomMapper.emotionTitle(item));
             tvCreateDate.setText(AgingRoomMapper.formatCreatedDate(item.getCreateDate()));
             tvDday.setText(AgingRoomMapper.formatDday(item.getCreateDate(), LocalDate.now()));
+
+            // 숙성 완료(D-Day) 항목에만 완성하기 버튼 노출
+            boolean matured = AgingRoomMapper.isMatured(item.getCreateDate(), LocalDate.now());
+            btnComplete.setVisibility(matured ? View.VISIBLE : View.GONE);
+            if (matured && completeClickListener != null) {
+                btnComplete.setOnClickListener(v -> completeClickListener.onComplete(item));
+            } else {
+                btnComplete.setOnClickListener(null);
+            }
 
             clear();
             ivJellyIcon.setImageResource(R.drawable.ic_jelly_placeholder);

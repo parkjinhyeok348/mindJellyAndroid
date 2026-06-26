@@ -51,6 +51,16 @@ final class AgingRoomMapper {
         return nullToDash(createDate);
     }
 
+    /** 생성일 + 7일이 오늘 이전(이하)이면 숙성 완료(수확 가능). */
+    static boolean isMatured(String createDate, LocalDate today) {
+        try {
+            LocalDate completedDate = LocalDate.parse(createDate).plusDays(AGING_DAYS);
+            return !completedDate.isAfter(today);
+        } catch (RuntimeException ignored) {
+            return false;
+        }
+    }
+
     /** 생성일 + 7일 기준 남은 일수. "D-4" / "D-Day" / 파싱불가 시 "D-?". */
     static String formatDday(String createDate, LocalDate today) {
         try {
