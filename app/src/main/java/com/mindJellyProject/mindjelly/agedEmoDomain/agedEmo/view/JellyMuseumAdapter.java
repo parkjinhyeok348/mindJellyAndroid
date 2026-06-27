@@ -28,11 +28,20 @@ import retrofit2.Response;
 
 public class JellyMuseumAdapter extends RecyclerView.Adapter<JellyMuseumAdapter.ViewHolder> {
 
+    interface OnItemClickListener {
+        void onItemClick(AgedEmoMuseumResDTO item);
+    }
+
     private final List<AgedEmoMuseumResDTO> items = new ArrayList<>();
     private final AgedEmoImageService agedEmoImageService;
+    private OnItemClickListener onItemClickListener;
 
     JellyMuseumAdapter(Context context) {
         this.agedEmoImageService = RetrofitClient.createService(AgedEmoImageService.class, context);
+    }
+
+    void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -54,7 +63,11 @@ public class JellyMuseumAdapter extends RecyclerView.Adapter<JellyMuseumAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(items.get(position));
+        AgedEmoMuseumResDTO item = items.get(position);
+        holder.bind(item);
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) onItemClickListener.onItemClick(item);
+        });
     }
 
     @Override

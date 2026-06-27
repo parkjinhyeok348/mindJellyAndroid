@@ -1,5 +1,6 @@
 package com.mindJellyProject.mindjelly.agedEmoDomain.agedEmo.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,11 @@ public class jellyMuseumActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.container_museum_jellies);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new JellyMuseumAdapter(this);
+        adapter.setOnItemClickListener(item -> {
+            Intent intent = new Intent(this, AgedEmoDetailActivity.class);
+            intent.putExtra(AgedEmoDetailActivity.EXTRA_AGED_EMO_ID, item.getAgedEmoId());
+            startActivity(intent);
+        });
         recyclerView.setAdapter(adapter);
 
         Button btnRefresh = findViewById(R.id.btn_refresh_museum);
