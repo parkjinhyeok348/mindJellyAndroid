@@ -92,12 +92,18 @@ public class JellyDetailActivity extends AppCompatActivity {
         jellyViewModel.deleteJelly(jellyId).observe(this, resource -> {
             if (resource != null && resource.isSuccess()) {
                 Toast.makeText(this, getString(R.string.success_jelly_deleted), Toast.LENGTH_SHORT).show();
-                finish();
+                navigateToMain();
             } else if (resource != null && resource.isError()) {
                 binding.btnDelete.setEnabled(true);
                 Toast.makeText(this, ErrorMessageUtil.getKoreanMessage(resource, this), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void navigateToMain() {
+        Intent intent = new Intent(this, com.mindJellyProject.mindjelly.MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 
     private void showAgingConfirmDialog() {
@@ -114,8 +120,8 @@ public class JellyDetailActivity extends AppCompatActivity {
         jellyViewModel.startAging(jellyId).observe(this, resource -> {
             if (resource != null && resource.isSuccess()) {
                 Toast.makeText(this, getString(R.string.success_aging_started), Toast.LENGTH_SHORT).show();
+                navigateToMain();
                 startActivity(new Intent(this, AgingRoomActivity.class));
-                finish();
             } else if (resource != null && resource.isError()) {
                 binding.btnStartAging.setEnabled(true);
                 Toast.makeText(this, ErrorMessageUtil.getKoreanMessage(resource, this), Toast.LENGTH_SHORT).show();

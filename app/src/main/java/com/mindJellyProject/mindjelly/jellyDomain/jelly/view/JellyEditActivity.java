@@ -1,5 +1,6 @@
 package com.mindJellyProject.mindjelly.jellyDomain.jelly.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -67,7 +68,9 @@ public class JellyEditActivity extends AppCompatActivity {
         jellyViewModel.updateJelly(jellyId, reqDTO).observe(this, resource -> {
             if (resource != null && resource.isSuccess()) {
                 Toast.makeText(this, getString(R.string.success_edit_saved), Toast.LENGTH_SHORT).show();
-                finish();
+                Intent intent = new Intent(this, com.mindJellyProject.mindjelly.MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             } else if (resource != null && resource.isError()) {
                 binding.btnSaveEdit.setEnabled(true);
                 Toast.makeText(this, ErrorMessageUtil.getKoreanMessage(resource, this), Toast.LENGTH_SHORT).show();
