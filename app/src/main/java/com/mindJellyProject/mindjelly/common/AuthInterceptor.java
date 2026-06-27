@@ -39,7 +39,7 @@ public class AuthInterceptor implements Interceptor {
 
         Response response = chain.proceed(request);
 
-        if (response.code() == 401 || response.code() == 403) {
+        if (response.code() == 401 || isExpiredToken403(response)) {
             SessionManager.getInstance(appContext).clear();
             RetrofitClient.reset();
             Intent intent = new Intent(appContext, LoginActivity.class);
@@ -48,5 +48,19 @@ public class AuthInterceptor implements Interceptor {
         }
 
         return response;
+    }
+
+    // 403이 토큰 만료에 의한 것인지 응답 바디로 구분
+    // 백엔드가 비즈니스 로직 거부(젤리 조합 등)에도 403을 사용하므로 키워드로 필터링
+    private boolean isExpiredToken403(Response response) {
+        if (response.code() != 403) return false;
+        try {
+            okhttp3.ResponseBody peeked = response.peekBody(512);
+            if (peeked == null) return false;
+            String body = peeked.string().toLowerCase();
+            return body.contains("expired") || body.contains("jwt") || body.contains("token");
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

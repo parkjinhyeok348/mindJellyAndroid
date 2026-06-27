@@ -2,6 +2,8 @@ package com.mindJellyProject.mindjelly.common;
 
 import android.content.Context;
 
+import com.mindJellyProject.mindjelly.BuildConfig;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,8 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 2026-05-12     KTDS            JWT Bearer 토큰 주입 인터셉터 연결
  */
 public class RetrofitClient {
-    private static final String BASE_URL = "http://10.0.2.2:8080/";
-    public static final String BASE_SERVER_URL = "http://10.0.2.2:8080";
+    private static final String BASE_URL = BuildConfig.API_BASE_URL;
+    public static final String BASE_SERVER_URL = BuildConfig.API_BASE_URL;
     private static RetrofitClient instance;
     private final Retrofit retrofit;
 
