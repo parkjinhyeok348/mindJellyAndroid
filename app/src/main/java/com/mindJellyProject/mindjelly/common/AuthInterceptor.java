@@ -39,7 +39,7 @@ public class AuthInterceptor implements Interceptor {
 
         Response response = chain.proceed(request);
 
-        if (response.code() == 401) {
+        if (response.code() == 401 || response.code() == 403) {
             SessionManager.getInstance(appContext).clear();
             RetrofitClient.reset();
             Intent intent = new Intent(appContext, LoginActivity.class);
