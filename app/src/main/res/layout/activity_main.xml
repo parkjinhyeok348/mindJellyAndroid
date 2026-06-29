@@ -13,19 +13,20 @@
             android:id="@+id/background_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/home_screen"
             android:contentDescription="@string/app_name" />
 
         <!-- 말풍선 오버레이 (캐릭터 머리 위 영역) -->
         <TextView
             android:id="@+id/tvSpeechBubble"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="164dp"
             android:layout_marginTop="102dp"
+            android:layout_marginEnd="12dp"
             android:gravity="center"
             android:textColor="#333333"
             android:textSize="13sp"
