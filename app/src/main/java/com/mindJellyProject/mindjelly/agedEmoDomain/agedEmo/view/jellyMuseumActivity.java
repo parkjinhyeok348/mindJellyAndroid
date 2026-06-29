@@ -13,7 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mindJellyProject.mindjelly.R;
@@ -49,7 +49,7 @@ public class jellyMuseumActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tv_museum_status);
         progressBar = findViewById(R.id.progress_museum);
         recyclerView = findViewById(R.id.container_museum_jellies);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         adapter = new JellyMuseumAdapter(this);
         adapter.setOnItemClickListener(item -> {
             Intent intent = new Intent(this, AgedEmoDetailActivity.class);
